@@ -4,6 +4,7 @@ import {CardComponent} from './card/card.component';
 import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {DetailComponent} from './detail/detail.component';
+import {CartComponent} from './cart/cart.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/product', pathMatch: 'full'},
@@ -13,13 +14,15 @@ const routes: Routes = [
   {path: 'logout', component: CardComponent},
   {path: 'register', component: SignupComponent},
   {path: 'product/:id', component: DetailComponent},
-  {path: 'category/:id', component: CardComponent}
+  {path: 'category/:id', component: CardComponent},
+  {path: 'cart', component: CartComponent},
+  {path: 'success', component: SignupComponent}
 ];
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   exports: [RouterModule]
 })

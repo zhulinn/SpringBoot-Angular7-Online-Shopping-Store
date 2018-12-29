@@ -3,15 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {ProductInfo} from './productInfo';
-
+import {apiUrl} from './mockData';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private apiUrl = '//localhost:8080/api';
-  private productUrl = `${this.apiUrl}/product`;
-  private categoryUrl = `${this.apiUrl}/category`;
+  private productUrl = `${apiUrl}/product`;
+  private categoryUrl = `${apiUrl}/category`;
   constructor(private http: HttpClient) { }
 
   getAllInPage(page: number, size: number): Observable<any>{
