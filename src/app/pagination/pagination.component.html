@@ -1,0 +1,39 @@
+<div class="col-md-12 column">
+  <ul class="pagination justify-content-end">
+
+
+    <li class="page-item disabled" *ngIf="currentPage?.number == 0">
+      <a class="page-link">Previous</a>
+    </li>
+
+    <li class="page-item" *ngIf="currentPage?.number > 0">
+      <a class="page-link" [routerLink]="['./']" [queryParams]="{page: currentPage?.number, size: currentPage?.size}">Previous</a>
+    </li>
+
+
+    <div *ngFor="let item of counter(currentPage?.totalPages); let i = index">
+
+      <li class="page-item active" *ngIf="currentPage?.number== i; else: inactive">
+        <a class="page-link">{{i + 1}}</a>
+      </li>
+      <ng-template #inactive>
+        <li class="page-item">
+          <a class="page-link" routerLink="./" [queryParams]="{page: i + 1, size: currentPage?.size}">{{i + 1}}</a>
+        </li>
+      </ng-template>
+
+
+    </div>
+
+
+    <li class="page-item disabled" *ngIf="currentPage?.number + 1 >= currentPage?.totalPages; else next">
+      <a class="page-link">Next</a>
+    </li>
+    <ng-template #next>
+      <li class="page-item">
+        <a class="page-link" [routerLink]="['./']"
+           [queryParams]="{page: currentPage?.number + 2, size: currentPage?.size}">Next</a>
+      </li>
+    </ng-template>
+  </ul>
+</div>
