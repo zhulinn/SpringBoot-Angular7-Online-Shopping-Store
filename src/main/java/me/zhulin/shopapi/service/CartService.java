@@ -1,6 +1,7 @@
 package me.zhulin.shopapi.service;
 
 import me.zhulin.shopapi.dto.Item;
+import me.zhulin.shopapi.entity.ProductInOrder;
 import me.zhulin.shopapi.entity.User;
 import me.zhulin.shopapi.form.ItemForm;
 
@@ -21,6 +22,6 @@ public interface CartService {
 
     BigDecimal getTotal();
 
-    void mergeLocalCart(Collection<Item> items, User user);
+    void mergeLocalCart(Collection<ProductInOrder> productInOrders, User user);
 
 }

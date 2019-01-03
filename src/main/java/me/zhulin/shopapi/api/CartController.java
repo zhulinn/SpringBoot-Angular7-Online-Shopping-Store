@@ -1,7 +1,6 @@
 package me.zhulin.shopapi.api;
 
 
-import me.zhulin.shopapi.dto.Item;
 import me.zhulin.shopapi.entity.Cart;
 import me.zhulin.shopapi.entity.ProductInOrder;
 import me.zhulin.shopapi.entity.User;
@@ -37,18 +36,17 @@ public class CartController {
     ProductInOrderRepository productInOrderRepository;
 
     @PostMapping("")
-    public Cart mergeCart(@RequestBody Collection<Item> items, Principal principal) {
+    public Cart mergeCart(@RequestBody Collection<ProductInOrder> productInOrders, Principal principal) {
         User user = userService.findOne(principal.getName());
-        cartService.mergeLocalCart(items, user);
+        cartService.mergeLocalCart(productInOrders, user);
         return user.getCart();
     }
 
     @PostMapping("/add")
     public boolean mergeCart(@RequestBody ItemForm form, Principal principal) {
         var productInfo = productService.findOne(form.getProductId());
-        var item = new Item(productInfo, form.getQuantity());
         try {
-            mergeCart(Collections.singleton(item), principal);
+            mergeCart(Collections.singleton(new ProductInOrder(productInfo, form.getQuantity())), principal);
         } catch (Exception e) {
             return false;
         }

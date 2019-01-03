@@ -106,27 +106,26 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void mergeLocalCart(Collection<Item> items, User user) {
+    public void mergeLocalCart(Collection<ProductInOrder> productInOrders, User user) {
         Cart cart = user.getCart();
         if (cart == null) {
             cart = new Cart(user);
         }
         Cart finalCart = cart;
-        if (items != null) {
-            items.forEach(item -> {
-                var productInfo = item.getProductInfo();
-                ProductInOrder productInOrder;
+        if (productInOrders != null) {
+            productInOrders.forEach(productInOrder -> {
                 Set<ProductInOrder> set = finalCart.getProducts();
-                Optional<ProductInOrder> old = set.stream().filter(e -> e.getProductId().equals(productInfo.getProductId())).findFirst();
+                Optional<ProductInOrder> old = set.stream().filter(e -> e.getProductId().equals(productInOrder.getProductId())).findFirst();
+                ProductInOrder prod;
                 if (old.isPresent()) {
-                    productInOrder = old.get();
-                    productInOrder.setCount(item.getQuantity() + old.get().getCount());
+                    prod = old.get();
+                    prod.setCount(productInOrder.getCount() + prod.getCount());
                 } else {
-                    productInOrder = new ProductInOrder(item.getProductInfo(), item.getQuantity());
-                    productInOrder.setCart(finalCart);
-                    finalCart.getProducts().add(productInOrder);
+                    prod = productInOrder;
+                    prod.setCart(finalCart);
+                    finalCart.getProducts().add(prod);
                 }
-                productInOrderRepository.save(productInOrder);
+                productInOrderRepository.save(prod);
             });
         }
         user.setCart(cart);
