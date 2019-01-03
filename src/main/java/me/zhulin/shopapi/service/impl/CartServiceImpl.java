@@ -120,7 +120,7 @@ public class CartServiceImpl implements CartService {
                 Optional<ProductInOrder> old = set.stream().filter(e -> e.getProductId().equals(productInfo.getProductId())).findFirst();
                 if (old.isPresent()) {
                     productInOrder = old.get();
-                    productInOrder.setProductQuantity(item.getQuantity() + old.get().getProductQuantity());
+                    productInOrder.setCount(item.getQuantity() + old.get().getCount());
                 } else {
                     productInOrder = new ProductInOrder(item.getProductInfo(), item.getQuantity());
                     productInOrder.setCart(finalCart);
@@ -129,7 +129,6 @@ public class CartServiceImpl implements CartService {
                 productInOrderRepository.save(productInOrder);
             });
         }
-
         user.setCart(cart);
         userRepository.save(user);
         cartRepository.save(finalCart);

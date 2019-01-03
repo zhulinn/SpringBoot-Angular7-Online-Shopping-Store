@@ -5,6 +5,7 @@ import lombok.Getter;
 /**
  * Created By Zhu Lin on 3/10/2018.
  */
+
 @Getter
 public enum ResultEnum  {
 

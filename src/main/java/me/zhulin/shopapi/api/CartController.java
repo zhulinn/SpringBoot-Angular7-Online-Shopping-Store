@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -45,10 +44,15 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public Cart mergeCart(@RequestBody ItemForm form, Principal principal) {
+    public boolean mergeCart(@RequestBody ItemForm form, Principal principal) {
         var productInfo = productService.findOne(form.getProductId());
         var item = new Item(productInfo, form.getQuantity());
-        return mergeCart(Collections.singleton(item), principal);
+        try {
+            mergeCart(Collections.singleton(item), principal);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @PostMapping("/{itemId}")
@@ -58,7 +62,7 @@ public class CartController {
         final ProductInOrder[] res = {null};
         op.ifPresent(productInOrder -> {
             res[0] = productInOrder;
-            productInOrder.setProductQuantity(quantity);
+            productInOrder.setCount(quantity);
             productInOrderRepository.save(productInOrder);
 
         });
@@ -67,20 +71,16 @@ public class CartController {
 
     @DeleteMapping("/{itemId}")
     @Transactional
-    public boolean deleteItem(@PathVariable("itemId") String itemId, Principal principal){
+    public Cart deleteItem(@PathVariable("itemId") String itemId, Principal principal) {
         User user = userService.findOne(principal.getName());
         var op = user.getCart().getProducts().stream().filter(e -> itemId.equals(e.getProductId())).findFirst();
-        final boolean[] res = {false};
         op.ifPresent(productInOrder -> {
             user.getCart().getProducts().remove(productInOrder);
-
             userService.save(user);
             productInOrderRepository.deleteById(productInOrder.getId());
 
-            res[0] = true;
-
         });
-        return res[0];
+        return user.getCart();
     }
 
 

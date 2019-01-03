@@ -2,6 +2,7 @@ package me.zhulin.shopapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -15,7 +16,7 @@ import java.util.Objects;
  */
 @Entity
 @Data
-
+@NoArgsConstructor
 public class ProductInOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,38 +33,47 @@ public class ProductInOrder {
     private OrderMain orderMain;
 
 
-
     @NotEmpty
     private String productId;
 
-    /** 名字. */
+    /**
+     * 名字.
+     */
     @NotEmpty
     private String productName;
 
-    /** 描述. */
+    /**
+     * 描述.
+     */
     @NotNull
     private String productDescription;
 
-    /** 小图. */
+    /**
+     * 小图.
+     */
     private String productIcon;
 
-    /** 类目编号. */
+    /**
+     * 类目编号.
+     */
     @NotNull
     private Integer categoryType;
 
-    /** 单价. */
+    /**
+     * 单价.
+     */
     @NotNull
     private BigDecimal productPrice;
 
-    /** 库存. */
+    /**
+     * 库存.
+     */
     @Min(0)
     private Integer productStock;
 
     @Min(1)
-    private Integer productQuantity;
+    private Integer count;
 
-    public ProductInOrder() {
-    }
 
     public ProductInOrder(ProductInfo productInfo, Integer quantity) {
         this.productId = productInfo.getProductId();
@@ -73,7 +83,7 @@ public class ProductInOrder {
         this.categoryType = productInfo.getCategoryType();
         this.productPrice = productInfo.getProductPrice();
         this.productStock = productInfo.getProductStock();
-        this.productQuantity = quantity;
+        this.count = quantity;
     }
 
     // fix bi-direction toString() recursion problem
@@ -87,11 +97,12 @@ public class ProductInOrder {
                 ", productIcon='" + productIcon + '\'' +
                 ", categoryType=" + categoryType +
                 ", productPrice=" + productPrice +
-                ", productQuantity=" + productQuantity +
+                ", count=" + count +
                 ", cartId=" + cart.getCartId() +
                 ", orderId=" + orderMain.getOrderId() +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {

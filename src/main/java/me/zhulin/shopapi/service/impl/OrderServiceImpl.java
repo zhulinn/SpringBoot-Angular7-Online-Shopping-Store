@@ -92,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
         for(ProductInOrder productInOrder : products) {
             ProductInfo productInfo = productInfoRepository.findFirstByProductId(productInOrder.getProductId());
             if(productInfo != null) {
-                productService.increaseStock(productInOrder.getProductId(), productInOrder.getProductQuantity());
+                productService.increaseStock(productInOrder.getProductId(), productInOrder.getCount());
             }
         }
     }
