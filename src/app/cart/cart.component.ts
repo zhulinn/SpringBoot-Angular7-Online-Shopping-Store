@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from '../shared/services/cart.service';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {Subscription} from "rxjs";
-import {Item} from "../shared/models/Item";
-import {UserService} from "../shared/user.service";
+import {Subject, Subscription} from "rxjs";
+import {UserService} from "../shared/services/user.service";
 import {JwtResponse} from "../shared/response/JwtResponse";
+import {ProductInOrder} from "../shared/models/ProductInOrder";
+import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({
     selector: 'app-cart',
@@ -18,63 +17,77 @@ export class CartComponent implements OnInit, OnDestroy {
     map: any;
     title: string;
 
-    itemsSubscribtion: Subscription;
-    items: Item[];
+    itemsSubscription: Subscription;
+    productInOrders: ProductInOrder[];
 
-    totalSubscribtion: Subscription;
+    totalSubscription: Subscription;
     total: number;
     currentUser: JwtResponse;
-    userSubscribtion: Subscription;
+    userSubscription: Subscription;
+
+    private updateTerms = new Subject<ProductInOrder>();
 
     constructor(private cartService: CartService,
-                private userService: UserService,
-                private router: Router,
-                private location: Location) {
-        this.itemsSubscribtion = this.cartService.items.subscribe(items => {
-            this.items = items;
-        });
-        this.totalSubscribtion = this.cartService.total.subscribe(total => this.total = total);
-        this.userSubscribtion = this.userService.currentUser.subscribe(user => this.currentUser = user);
+                private userService: UserService
+    ) {
+
+        this.userSubscription = this.userService.currentUser.subscribe(user => this.currentUser = user);
     }
 
     ngOnInit() {
         this.cartService.getCart();
         this.title = 'My Cart';
+
+        this.updateTerms.pipe(
+            // wait 300ms after each keystroke before considering the term
+            debounceTime(300),
+
+            // ignore new term if same as previous term
+            distinctUntilChanged((p, q) => p.count == q.count),
+
+            // switch to new search observable each time the term changes
+            switchMap((productInOrder: ProductInOrder) => this.cartService.update(productInOrder))
+        );
     }
 
     ngOnDestroy() {
         if (!this.currentUser) {
-            this.cartService.storeItems();
+            this.cartService.storeLocalCart();
         }
-        this.userSubscribtion.unsubscribe();
-        this.itemsSubscribtion.unsubscribe();
-        this.totalSubscribtion.unsubscribe();
+        this.userSubscription.unsubscribe();
     }
 
-    minus(item) {
-        this.cartService.minus(item);
+    addOne(productInOrder) {
+        productInOrder.count++;
+        CartComponent.validateCount(productInOrder);
+        this.updateTerms.next(productInOrder);
+    }
 
+    minusOne(productInOrder) {
+        productInOrder.count--;
+        CartComponent.validateCount(productInOrder);
+        this.updateTerms.next(productInOrder);
+    }
 
+    onChange(productInOrder) {
+        CartComponent.validateCount(productInOrder);
+        this.updateTerms.next(productInOrder);
     }
 
 
-    plus(item) {
-        this.cartService.plus(item);
-
+    remove(productInOrders, productInOrder) {
+        this.cartService.remove(productInOrders, productInOrder);
     }
 
-    change(item, updatedValue) {
-        this.cartService.change(item, updatedValue);
 
-
+    static validateCount(productInOrder) {
+        const max = productInOrder.productStock;
+        if (productInOrder.count > max) {
+            productInOrder.count = max;
+        } else if (productInOrder.count < 1) {
+            productInOrder.count = 1;
+        }
     }
-
-    remove(todo) {
-        this.cartService.remove(todo);
-
-
-    }
-
     checkout() {
 
     }

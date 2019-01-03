@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {apiUrl} from "./mockData";
+import {apiUrl} from "../mockData";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
-import {JwtResponse} from "./response/JwtResponse";
+import {JwtResponse} from "../response/JwtResponse";
 import {CookieService} from "ngx-cookie-service";
 
 @Injectable({

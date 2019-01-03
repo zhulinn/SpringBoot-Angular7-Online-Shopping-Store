@@ -2,50 +2,56 @@
 
 <!--Cart Detail Table-->
 <table class="table table-striped text-center">
-  <thead>
-  <tr>
-    <th scope="col">Photo</th>
-    <th scope="col">Name</th>
-    <th scope="col">Price</th>
-    <th scope="col">Quantity</th>
-    <th scope="col">Subtotal</th>
-    <th scope="col">Action</th>
+    <thead>
+    <tr>
+        <th scope="col">Photo</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Subtotal</th>
+        <th scope="col">Action</th>
 
-  </tr>
-  </thead>
-  <tbody>
+    </tr>
+    </thead>
+    <tbody>
 
-  <tr *ngFor="let item of items" >
-    <th class="align-middle" scope="row">
-      <img height="100px" src="{{item.productInfo.productIcon}}">
-    </th>
-    <td class="align-middle">{{item.productInfo.productName}}</td>
-    <td class="align-middle">{{item.productInfo.productPrice | currency}}</td>
-    <td class="align-middle">
-      <a (click)="minus(item)"><i class="fa fa-minus"></i></a>
-      <input min="1" id="{{item.productInfo.productId}}" #q
-             [max]=item.productInfo.productStock  size="5" [value] = item.quantity type="number" required
-             name='count' (input)="change(item, q.value)">
-      <a (click)="plus(item)"> <i class="fa fa-plus"></i></a>
-    </td>
-    <td class="align-middle">{{item.productInfo.productPrice * item.quantity|currency}}</td>
-    <td class="align-middle">
-      <a (click)="remove(item)" >Remove</a>
-    </td>
+    <tr *ngFor="let productInOrder of productInOrders">
+        <th class="align-middle" scope="row">
+            <img height="100px" src="{{productInOrder.productIcon}}" alt="{{productInOrder.productName}}">
+        </th>
+        <td class="align-middle">{{productInOrder.productName}}</td>
+        <td class="align-middle">{{productInOrder.productPrice | currency}}</td>
 
-  </tr>
+        <td class="align-middle">
+            <a (click)="addOne(productInOrder)"><i class="fa fa-minus"></i></a>
+            <input min="1" id="{{productInOrder.productId}}"
+                   [max]=productInOrder.productStock
+                   [(ngModel)]="productInOrder.count"
+                   (ngModelChange)="onChange(productInOrder)"
+                   size="5"
+                   type="number"
+                   required
+                   name='count'>
+            <a (click)="minusOne(productInOrder)"> <i class="fa fa-plus"></i></a>
+        </td>
 
-  </tbody>
+        <td class="align-middle">{{productInOrder.productPrice * productInOrder.count|currency}}</td>
+        <td class="align-middle">
+            <a (click)="remove(productInOrders, productInOrder)">Remove</a>
+        </td>
+
+    </tr>
+
+    </tbody>
 </table>
 
 
-
-<div *ngIf="items?.length == 0">
-  <h4 class="text-muted text-center">Cart is empty. Go to get something! :)</h4>
+<div *ngIf="productInOrders?.length == 0">
+    <h4 class="text-muted text-center">Cart is empty. Go to get something! :)</h4>
 </div>
-<div *ngIf="items?.length != 0">
-  <h5 style="display: inline;">Total: {{total | currency}}</h5>
-  <form (ngSubmit)="checkout()" method="post">
-    <button type="submit" class="btn btn-warning float-right">Checkout</button>
-  </form>
+<div *ngIf="productInOrders?.length != 0">
+    <h5 style="display: inline;">Total: {{total | currency}}</h5>
+    <form (ngSubmit)="checkout()" method="post">
+        <button type="submit" class="btn btn-warning float-right">Checkout</button>
+    </form>
 </div>

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserService} from "../shared/user.service";
+import {UserService} from "../shared/services/user.service";
 import {Observable, Subscription} from "rxjs";
 import {JwtResponse} from "../shared/response/JwtResponse";
 import {Router} from "@angular/router";

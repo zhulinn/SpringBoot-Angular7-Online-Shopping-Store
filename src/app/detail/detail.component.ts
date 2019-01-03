@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductInfo} from '../shared/models/productInfo';
-import {ProductService} from '../shared/product.service';
+import {ProductService} from '../shared/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CartService} from '../shared/services/cart.service';
 import {CookieService} from "ngx-cookie-service";
-import {Item} from "../shared/models/Item";
+import {ProductInOrder} from "../shared/models/ProductInOrder";
+import {ProductInfo} from "../shared/models/productInfo";
+
 
 @Component({
     selector: 'app-detail',
@@ -13,17 +14,16 @@ import {Item} from "../shared/models/Item";
 })
 export class DetailComponent implements OnInit {
 
-    productInfo: ProductInfo;
+
     title: string;
-    item: Item;
+    quantity: number;
+    productInfo: ProductInfo;
 
     constructor(private productService: ProductService,
                 private cartService: CartService,
                 private cookieService: CookieService,
                 private route: ActivatedRoute,
                 private router: Router) {
-        this.item = new Item();
-        this.item.quantity = 1;
     }
 
 
@@ -46,14 +46,23 @@ export class DetailComponent implements OnInit {
         this.productService.getDetail(id)
             .subscribe(prod => {
                 this.productInfo = prod;
-                this.item.productInfo = this.productInfo;
             });
     }
 
     addToCart() {
-        this.cartService.addItem(this.item);
+        this.cartService.addItem(new ProductInOrder(this.productInfo, this.quantity));
 
         this.router.navigateByUrl('/cart');
+    }
+
+
+    validateCount(productInOrder) {
+        const max = productInOrder.productStock;
+        if (productInOrder.productQuantity > max) {
+            productInOrder.productQuantity = max;
+        } else if (productInOrder.productQuantity < 1) {
+            productInOrder.productQuantity = 1;
+        }
     }
 }
 
