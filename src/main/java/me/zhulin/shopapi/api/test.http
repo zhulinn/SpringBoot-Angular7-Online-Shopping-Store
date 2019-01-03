@@ -1,0 +1,62 @@
+GET {{host-url}}/product
+
+###
+
+GET {{host-url}}/cart
+
+###
+
+POST {{host-url}}/cart
+Content-Type: application/json
+
+{
+  "productId": "B0001",
+  "quantity": 4
+}
+
+###
+
+POST {{host-url}}/login
+Content-Type: application/json
+
+{
+  "username": "customer1@email.com",
+  "password": "123",
+  "rem": true
+}
+
+###
+
+POST {{host-url}}/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+
+[
+]
+
+###
+
+POST {{host-url}}/cart/B0002
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+
+"3"
+
+###
+
+DELETE {{host-url}}/cart/B0002
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+
+###
+POST {{host-url}}/cart/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+
+{
+  "quantity": 4,
+  "productId": "B0004"
+}
+
+###
+
