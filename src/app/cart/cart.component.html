@@ -30,7 +30,7 @@
             <input min="1" id="{{productInOrder.productId}}"
                    [max]=productInOrder.productStock
                    [(ngModel)]="productInOrder.count"
-                   (ngModelChange)="onChange(productInOrder)"
+                   (change)="onChange(productInOrder)"
                    size="5"
                    type="number"
                    required

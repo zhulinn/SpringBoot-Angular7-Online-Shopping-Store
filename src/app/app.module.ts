@@ -16,6 +16,7 @@ import {CartComponent} from './cart/cart.component';
 import {CookieService} from "ngx-cookie-service";
 import {ErrorInterceptor} from "./_interceptors/error-interceptor.service";
 import {JwtInterceptor} from "./_interceptors/jwt-interceptor.service";
+import {MsgComponent} from './msg/msg.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import {JwtInterceptor} from "./_interceptors/jwt-interceptor.service";
         LoginComponent,
         SignupComponent,
         DetailComponent,
-        CartComponent
+        CartComponent,
+        MsgComponent
     ],
     imports: [
         BrowserModule,

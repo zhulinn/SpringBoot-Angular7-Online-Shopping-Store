@@ -50,7 +50,8 @@ export class UserService {
         this.cookieService.delete('currentUser');
     }
 
-
+//%7B%22token%22%3A%22eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyMUBlbWFpbC5jb20iLCJpYXQiOjE1NDY1MzM4MjYsImV4cCI6MTU0NjYyMDIyNn0.ci-DsU0T4KY2jtW6Avz5VgRQiPHftJWdKWakBaYsh5V2sAqrD5kNuT4-PR0P6OY1NgaD_7BSkb-s09hRqYVWHA%22%2C%22type%22%3A%22Bearer%22%2C%22account%22%3A%22manager1%40email.com%22%2C%22name%22%3A%22manager1%22%2C%22authorities%22%3A%5B%7B%22authority%22%3A%22ROLE_MANAGER%22%7D%5D%7D
+//%7B%22token%22%3A%22eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NTMzMzI0LCJleHAiOjE1NDY2MTk3MjR9.bL0hO28EbYy6ouF_zmZko05KZ4o0ML7WgrjszeBSZzD1fqOW-jXxqCrCLg6oqb7bzVClyLns8al75d-hjHl2Eg%22%2C%22type%22%3A%22Bearer%22%2C%22account%22%3A%22customer1%40email.com%22%2C%22name%22%3A%22customer1%22%2C%22authorities%22%3A%5B%7B%22authority%22%3A%22ROLE_CUSTOMER%22%7D%5D%7D
     /**
      * Handle Http operation that failed.
      * Let the app continue.
