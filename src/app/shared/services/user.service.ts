@@ -21,8 +21,6 @@ export class UserService {
         this.currentUserSubject = new BehaviorSubject<JwtResponse>(JSON.parse(memo));
         this.currentUser = this.currentUserSubject.asObservable();
         cookieService.set('currentUser', memo);
-
-
     }
 
     get currentUserValue() {

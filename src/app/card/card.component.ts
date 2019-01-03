@@ -1,32 +1,42 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 // import {prod, products} from '../shared/mockData';
 import {ProductService} from '../shared/services/product.service';
 import {ActivatedRoute} from '@angular/router';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnDestroy {
 
 
   title: string;
   page: any;
+  private paramSub: Subscription;
+  private querySub: Subscription;
+
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute) {
-    route.queryParams.subscribe(() => {
-    this.update();
-    });
-    route.params.subscribe(() => {
-      this.update();
-    })
+
   }
 
 
   ngOnInit() {
+    this.querySub = this.route.queryParams.subscribe(() => {
+      this.update();
+    });
+    this.paramSub = this.route.params.subscribe(() => {
+      this.update();
+    });
 
+  }
+
+  ngOnDestroy(): void {
+    this.querySub.unsubscribe();
+    this.paramSub.unsubscribe();
   }
 
   update() {
@@ -55,5 +65,6 @@ export class CardComponent implements OnInit {
     }
 
   }
+
 
 }

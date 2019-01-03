@@ -5,7 +5,7 @@
       <img height="60%" class="card-img-top" src="{{productInfo?.productIcon}}">
       <div class="card-body">
         <h4 class="card-title ">{{productInfo?.productName}}</h4>
-        <form name="form" #f='ngForm' (ngSubmit)="productInfo?.productStatus == 0 && addToCart()">
+        <form name="form" #form='ngForm' (ngSubmit)="productInfo?.productStatus == 0 && addToCart()">
           <div class="text-left">
             <input hidden name="productId" [value]=productInfo?.productId>
             <p class="card-test"><strong>Description: </strong>{{productInfo?.productDescription}}</p>
@@ -17,10 +17,10 @@
 
             <label class="card-text">
               <strong>Quantity: </strong>
-              <input [(ngModel)]=quantity
-                     (ngModelChange)="validateCount(productInfo)"
+              <input [(ngModel)]=count
+                     (change)="validateCount()"
                      type="number"
-                     name="quantity"
+                     name="count"
                      required
                      min="1"
                      [max]=productInfo?.productStock
@@ -29,10 +29,11 @@
 
 
             <p class="card-text"><strong>Subtotal: </strong>
-              <label id="subtotal">{{quantity * productInfo?.productPrice | currency}}</label>
+              <label id="subtotal">{{count * productInfo?.productPrice | currency}}</label>
             </p>
           </div>
-          <button type="submit" *ngIf="productInfo?.productStatus == 0; else offBlock" class="btn btn-primary btn-lg"
+          <button type="submit" [disabled]="!form.form.valid" *ngIf="productInfo?.productStatus == 0; else offBlock"
+                  class="btn btn-primary btn-lg"
           >Add to Cart
           </button>
           <ng-template #offBlock><a class="btn btn-secondary btn-lg disabled">Unavailable</a></ng-template>

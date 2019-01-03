@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {apiUrl} from '../mockData';
-import {CookieService} from "ngx-cookie-service";
-import {BehaviorSubject, Observable, of} from "rxjs";
-import {map, tap} from "rxjs/operators";
-import {UserService} from "./user.service";
-import {Cart} from "../models/Cart";
-import {Item} from "../models/Item";
-import {JwtResponse} from "../response/JwtResponse";
-import {ProductInOrder} from "../models/ProductInOrder";
+import {CookieService} from 'ngx-cookie-service';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
+import {UserService} from './user.service';
+import {Cart} from '../models/Cart';
+import {Item} from '../models/Item';
+import {JwtResponse} from '../response/JwtResponse';
+import {ProductInOrder} from '../models/ProductInOrder';
 
 @Injectable({
     providedIn: 'root'
@@ -47,16 +47,19 @@ export class CartService {
             this.localMap = JSON.parse(this.cookieService.get('cart'));
             return Object.values(this.localMap);
         } else {
+            this.localMap = {};
             return [];
         }
     }
 
     getCart(): Observable<ProductInOrder[]> {
-        let localCart = this.getLocalCart();
+        const localCart = this.getLocalCart();
         if (this.currentUser) {
-            this.clearLocalCart();
             return this.http.post<Cart>(this.cartUrl, localCart).pipe(
-                tap(cart => console.log("Remote Cart: " + cart.products)),
+                tap(cart => {
+                    this.clearLocalCart();
+                    console.log(cart.products);
+                }),
                 map(cart => cart.products),
             );
         } else {
@@ -64,9 +67,8 @@ export class CartService {
         }
     }
 
-    addItem(productInOrder): Observable<any> {
+    addItem(productInOrder): Observable<boolean> {
         if (!this.currentUser) {
-            // if un-login
             if (this.cookieService.check('cart')) {
                 this.localMap = JSON.parse(this.cookieService.get('cart'));
             }
@@ -76,20 +78,21 @@ export class CartService {
                 this.localMap[productInOrder.productId].count += productInOrder.count;
             }
             this.cookieService.set('cart', JSON.stringify(this.localMap));
-            return of(null);
+            return of(true);
         } else {
             const url = `${this.cartUrl}/add`;
-            return this.http.post(url, {
-                "quantity": productInOrder.count,
-                "productId": productInOrder.productId
+            return this.http.post<boolean>(url, {
+                'quantity': productInOrder.count,
+                'productId': productInOrder.productId
             });
         }
     }
 
-    update(productInOrder): Observable<any> {
-        if (this.currentUser)  {
+    update(productInOrder): Observable<ProductInOrder> {
+
+        if (this.currentUser) {
             const url = `${this.cartUrl}/${productInOrder.productId}`;
-            return this.http.post<ProductInOrder>(url, productInOrder.productQuantity);
+            return this.http.post<ProductInOrder>(url, productInOrder.count);
         }
     }
 
@@ -97,18 +100,19 @@ export class CartService {
     remove(productInOrders, productInOrder): Observable<ProductInOrder[]> {
         if (!this.currentUser) {
             delete this.localMap[productInOrder.productId];
-            return of(productInOrders.filter(e => e.productId != productInOrder.productId));
+            return of(productInOrders.filter(e => e.productId !== productInOrder.productId));
         } else {
             const url = `${this.cartUrl}/${productInOrder.productId}`;
             return this.http.delete<Cart>(url).pipe(
                 map(cart => cart.products),
-            )
+            );
         }
     }
 
 
-    checkout() {
-
+    checkout(): Observable<any> {
+        const url = `${this.cartUrl}/checkout`;
+        return this.http.post(url, null).pipe();
     }
 
     storeLocalCart() {
@@ -116,6 +120,7 @@ export class CartService {
     }
 
     clearLocalCart() {
+        console.log('clear local cart');
         this.cookieService.delete('cart');
         this.localMap = {};
     }
