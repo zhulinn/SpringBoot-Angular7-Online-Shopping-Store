@@ -29,7 +29,7 @@ public class OrderController {
     UserService userService;
 
     @GetMapping("/order")
-    public Page<OrderMain> OrderList(@RequestParam(value = "page", defaultValue = "1") Integer page,
+    public Page<OrderMain> orderList(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                      @RequestParam(value = "size", defaultValue = "10") Integer size,
                                      Authentication authentication) {
         PageRequest request = PageRequest.of(page - 1, size);

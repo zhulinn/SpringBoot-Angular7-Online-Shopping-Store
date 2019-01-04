@@ -73,3 +73,9 @@ Authorization: Bearer {{token}}
 
 
 ###
+
+GET {{host-url}}/order
+Authorization: Bearer {{token}}
+
+###
+
