@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {JwtResponse} from '../response/JwtResponse';
 import {CookieService} from 'ngx-cookie-service';
+import {User} from "../models/User";
 
 @Injectable({
     providedIn: 'root'
@@ -50,13 +51,27 @@ export class UserService {
         this.cookieService.delete('currentUser');
     }
 
+    signUp(user: User): Observable<User> {
+        const url = `${apiUrl}/register`;
+        return this.http.post<User>(url, user);
+    }
+
+    update(user: User): Observable<User> {
+        return this.signUp(user);
+    }
+
+    get(email: string): Observable<User> {
+        const url = `${apiUrl}/profile/${email}`;
+        return this.http.get<User>(url);
+    }
+
     /**
      * Handle Http operation that failed.
      * Let the app continue.
      * @param operation - name of the operation that failed
      * @param result - optional value to return as the observable result
      */
-    private handleError<T> (operation = 'operation', result?: T) {
+    private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
 
             // TODO: send the error to remote logging infrastructure

@@ -20,6 +20,7 @@ import {MsgComponent} from './msg/msg.component';
 import {OrderComponent} from './order/order.component';
 import {OrderDetailComponent} from './order-detail/order-detail.component';
 import {ProductListComponent} from './product.list/product.list.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import {ProductListComponent} from './product.list/product.list.component';
         OrderComponent,
         OrderDetailComponent,
         ProductListComponent,
+        UserDetailComponent,
 
     ],
     imports: [

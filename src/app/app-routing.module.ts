@@ -9,6 +9,7 @@ import {AuthGuard} from "./_guards/auth.guard";
 import {OrderComponent} from "./order/order.component";
 import {OrderDetailComponent} from "./order-detail/order-detail.component";
 import {ProductListComponent} from "./product.list/product.list.component";
+import {UserDetailComponent} from "./user-detail/user-detail.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/product', pathMatch: 'full'},
@@ -29,6 +30,11 @@ const routes: Routes = [
         component: ProductListComponent,
         canActivate: [AuthGuard],
         data: {roles: ['ROLE_MANAGER', 'ROLE_EMPLOYEE']}
+    },
+    {
+        path: 'profiles',
+        component: UserDetailComponent,
+        canActivate: [AuthGuard]
     }
 
 ];
