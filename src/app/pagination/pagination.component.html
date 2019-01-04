@@ -14,8 +14,7 @@
 
       <ng-container *ngFor="let item of counter(currentPage?.totalPages); let i = index">
           <li class="page-item" *ngIf="currentPage && currentPage.number != i; else active">
-            <a
-                    class="page-link"
+            <a class="page-link "
                     routerLink="./"
                     [queryParams]="{ page: i + 1, size: currentPage?.size }"
             >{{ i + 1 }}</a
@@ -23,10 +22,10 @@
         </li>
           <ng-template #active>
               <li
-                      class="page-item active"
+                      class="page-item active "
 
               >
-                  <a class="page-link">{{ i + 1 }}</a>
+                  <button class="page-link " disabled>{{ i + 1 }}</button>
               </li>
           </ng-template>
       </ng-container>

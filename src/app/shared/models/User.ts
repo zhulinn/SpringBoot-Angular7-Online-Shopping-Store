@@ -13,4 +13,9 @@ export class User {
     active: boolean;
 
     role: string;
+
+    constructor(){
+        this.active = true;
+        this.role = 'ROLE_CUSTOMER';
+    }
 }

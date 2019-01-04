@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
+import {User} from "../shared/models/User";
 
 @Component({
   selector: 'app-signup',
@@ -8,13 +9,18 @@ import {Location} from '@angular/common';
 })
 export class SignupComponent implements OnInit {
 
+  user: User;
+
   constructor( private location: Location) {
+    this.user = new User();
+
   }
 
+
+
   ngOnInit() {
-  setTimeout(() => {
-    this.location.back();
-  }, 500)
+
+
   }
 
 }

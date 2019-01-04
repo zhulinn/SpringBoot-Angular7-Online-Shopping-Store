@@ -35,7 +35,8 @@ import {ProductListComponent} from './product.list/product.list.component';
         MsgComponent,
         OrderComponent,
         OrderDetailComponent,
-        ProductListComponent
+        ProductListComponent,
+
     ],
     imports: [
         BrowserModule,
