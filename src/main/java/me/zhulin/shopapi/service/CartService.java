@@ -1,27 +1,20 @@
 package me.zhulin.shopapi.service;
 
-import me.zhulin.shopapi.dto.Item;
+import me.zhulin.shopapi.entity.Cart;
 import me.zhulin.shopapi.entity.ProductInOrder;
 import me.zhulin.shopapi.entity.User;
-import me.zhulin.shopapi.form.ItemForm;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
  * Created By Zhu Lin on 3/10/2018.
  */
 public interface CartService {
-    void addItem(ItemForm itemForm);
-    void removeItem(String productId);
-    void updateQuantity(String productId, Integer quantity);
+    Cart getCart(User user);
 
-    Collection<Item> findAll();
+    Cart mergeLocalCart(Collection<ProductInOrder> productInOrders, User user);
 
-    void  checkout(User user);
+    Cart delete(String itemId, User user);
 
-    BigDecimal getTotal();
-
-    void mergeLocalCart(Collection<ProductInOrder> productInOrders, User user);
-
+    void checkout(User user);
 }

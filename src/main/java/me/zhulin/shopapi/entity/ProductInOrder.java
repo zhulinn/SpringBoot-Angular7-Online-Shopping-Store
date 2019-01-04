@@ -86,7 +86,6 @@ public class ProductInOrder {
         this.count = quantity;
     }
 
-    // fix bi-direction toString() recursion problem
     @Override
     public String toString() {
         return "ProductInOrder{" +
@@ -97,12 +96,10 @@ public class ProductInOrder {
                 ", productIcon='" + productIcon + '\'' +
                 ", categoryType=" + categoryType +
                 ", productPrice=" + productPrice +
+                ", productStock=" + productStock +
                 ", count=" + count +
-                ", cartId=" + cart.getCartId() +
-                ", orderId=" + orderMain.getOrderId() +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {

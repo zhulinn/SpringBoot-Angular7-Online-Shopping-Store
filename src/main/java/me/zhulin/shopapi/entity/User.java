@@ -2,6 +2,7 @@ package me.zhulin.shopapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -19,6 +20,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Table(name = "users")
+@NoArgsConstructor
 public class User implements Serializable {
 
     private static final long serialVersionUID = 4887904943282174032L;
@@ -45,7 +47,7 @@ public class User implements Serializable {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore  // fix bi-direction toString() recursion problem
-    private Cart cart;
+    private Cart cart = new Cart();
 
 
     public Collection<GrantedAuthority> getAuthorities() {
@@ -54,4 +56,21 @@ public class User implements Serializable {
         grantedAuthorities.add(grantedAuthority);
         return grantedAuthorities;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", active=" + active +
+                ", role='" + role + '\'' +
+                ", cart=" + cart.getCartId() +
+                '}';
+    }
+
 }
+

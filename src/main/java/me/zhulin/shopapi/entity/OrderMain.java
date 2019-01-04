@@ -1,8 +1,10 @@
 package me.zhulin.shopapi.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -20,7 +22,8 @@ import java.util.Set;
  */
 @Entity
 @Data
-
+@NoArgsConstructor
+@DynamicUpdate
 public class OrderMain implements Serializable {
     private static final long serialVersionUID = -3819883511505235030L;
 
@@ -50,7 +53,9 @@ public class OrderMain implements Serializable {
     @NotNull
     private BigDecimal orderAmount;
 
-    /** default 0: new order. */
+    /**
+     * default 0: new order.
+     */
     @NotNull
     @ColumnDefault("0")
     private Integer orderStatus;
@@ -61,15 +66,15 @@ public class OrderMain implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateTime;
 
-    public OrderMain(){
-
-    }
-
     public OrderMain(User buyer) {
         this.buyerEmail = buyer.getEmail();
         this.buyerName = buyer.getName();
         this.buyerPhone = buyer.getPhone();
         this.buyerAddress = buyer.getAddress();
+        this.orderAmount = this.products.stream().map(item -> item.getProductPrice().multiply(new BigDecimal(item.getCount())))
+                .reduce(BigDecimal::add)
+                .orElse(new BigDecimal(0));
         this.orderStatus = 0;
+
     }
 }

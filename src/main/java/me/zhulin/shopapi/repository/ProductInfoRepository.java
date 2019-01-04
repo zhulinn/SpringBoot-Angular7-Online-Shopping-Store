@@ -9,8 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created By Zhu Lin on 3/10/2018.
  */
 public interface ProductInfoRepository extends JpaRepository<ProductInfo, String> {
-    // One product
-    ProductInfo findFirstByProductId(String id);
+    ProductInfo findByProductId(String id);
     // onsale product
     Page<ProductInfo> findAllByProductStatusOrderByProductIdAsc(Integer productStatus, Pageable pageable);
 

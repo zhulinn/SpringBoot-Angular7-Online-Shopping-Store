@@ -7,6 +7,7 @@ import me.zhulin.shopapi.entity.User;
 import me.zhulin.shopapi.form.ItemForm;
 import me.zhulin.shopapi.repository.ProductInOrderRepository;
 import me.zhulin.shopapi.service.CartService;
+import me.zhulin.shopapi.service.ProductInOrderService;
 import me.zhulin.shopapi.service.ProductService;
 import me.zhulin.shopapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +32,31 @@ public class CartController {
     UserService userService;
     @Autowired
     ProductService productService;
-
+    @Autowired
+    ProductInOrderService productInOrderService;
     @Autowired
     ProductInOrderRepository productInOrderRepository;
 
     @PostMapping("")
-    public Cart mergeCart(@RequestBody Collection<ProductInOrder> productInOrders, Principal principal) {
+    public ResponseEntity<Cart> mergeCart(@RequestBody Collection<ProductInOrder> productInOrders, Principal principal) {
         User user = userService.findOne(principal.getName());
-        cartService.mergeLocalCart(productInOrders, user);
-        return user.getCart();
+        try {
+            cartService.mergeLocalCart(productInOrders, user);
+        } catch (Exception e) {
+            ResponseEntity.badRequest().body("Merge Cart Failed");
+        }
+        return ResponseEntity.ok(user.getCart());
     }
 
+    @GetMapping("")
+    public Cart getCart(Principal principal) {
+        User user = userService.findOne(principal.getName());
+        return cartService.getCart(user);
+    }
+
+
     @PostMapping("/add")
-    public boolean mergeCart(@RequestBody ItemForm form, Principal principal) {
+    public boolean addToCart(@RequestBody ItemForm form, Principal principal) {
         var productInfo = productService.findOne(form.getProductId());
         try {
             mergeCart(Collections.singleton(new ProductInOrder(productInfo, form.getQuantity())), principal);
@@ -53,59 +66,25 @@ public class CartController {
         return true;
     }
 
-    @PostMapping("/{itemId}")
+    @PutMapping("/{itemId}")
     public ProductInOrder modifyItem(@PathVariable("itemId") String itemId, @RequestBody Integer quantity, Principal principal) {
         User user = userService.findOne(principal.getName());
-        var op = user.getCart().getProducts().stream().filter(e -> itemId.equals(e.getProductId())).findFirst();
-        final ProductInOrder[] res = {null};
-        op.ifPresent(productInOrder -> {
-            res[0] = productInOrder;
-            productInOrder.setCount(quantity);
-            productInOrderRepository.save(productInOrder);
-
-        });
-        return res[0];
+        return productInOrderService.update(itemId, quantity, user);
     }
 
     @DeleteMapping("/{itemId}")
     @Transactional
     public Cart deleteItem(@PathVariable("itemId") String itemId, Principal principal) {
         User user = userService.findOne(principal.getName());
-        var op = user.getCart().getProducts().stream().filter(e -> itemId.equals(e.getProductId())).findFirst();
-        op.ifPresent(productInOrder -> {
-            user.getCart().getProducts().remove(productInOrder);
-            userService.save(user);
-            productInOrderRepository.deleteById(productInOrder.getId());
-
-        });
-        return user.getCart();
+        return cartService.delete(itemId, user);
     }
 
 
     @PostMapping("/checkout")
     public ResponseEntity checkout(Principal principal) {
         User user = userService.findOne(principal.getName());// Email as username
-        Cart cart = user.getCart();
-        if (cart != null) {
-            cart.getProducts().forEach(productInOrder -> {
-                productInOrder.setCart(null);
-                productInOrderRepository.save(productInOrder);
-            });
-        }
-
+        cartService.checkout(user);
         return ResponseEntity.ok(null);
-    }
-
-    @GetMapping("/remove")
-    public String remove(@RequestParam("product_id") String productId) {
-        cartService.removeItem(productId);
-        return "redirect:" + "/cart";
-    }
-
-    @GetMapping("/change")
-    public String plus(@RequestParam("product_id") String poductId, @RequestParam("quantity") Integer quantity) {
-        cartService.updateQuantity(poductId, quantity);
-        return "redirect:" + "/cart";
     }
 
 

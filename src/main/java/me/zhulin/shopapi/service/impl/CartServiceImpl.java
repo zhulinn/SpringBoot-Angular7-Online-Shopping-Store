@@ -1,24 +1,24 @@
 package me.zhulin.shopapi.service.impl;
 
 
-import me.zhulin.shopapi.dto.Item;
-import me.zhulin.shopapi.entity.*;
-import me.zhulin.shopapi.enums.ProductStatusEnum;
-import me.zhulin.shopapi.enums.ResultEnum;
-import me.zhulin.shopapi.exception.MyException;
-import me.zhulin.shopapi.form.ItemForm;
+import me.zhulin.shopapi.entity.Cart;
+import me.zhulin.shopapi.entity.OrderMain;
+import me.zhulin.shopapi.entity.ProductInOrder;
+import me.zhulin.shopapi.entity.User;
 import me.zhulin.shopapi.repository.CartRepository;
 import me.zhulin.shopapi.repository.OrderRepository;
 import me.zhulin.shopapi.repository.ProductInOrderRepository;
 import me.zhulin.shopapi.repository.UserRepository;
 import me.zhulin.shopapi.service.CartService;
 import me.zhulin.shopapi.service.ProductService;
+import me.zhulin.shopapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created By Zhu Lin on 3/11/2018.
@@ -36,100 +36,63 @@ public class CartServiceImpl implements CartService {
     ProductInOrderRepository productInOrderRepository;
     @Autowired
     CartRepository cartRepository;
-    private Map<String, Item> map = new LinkedHashMap<>();
+    @Autowired
+    UserService userService;
 
     @Override
-    public void addItem(ItemForm itemForm) {
-        ProductInfo productInfo = productService.findOne(itemForm.getProductId());
-
-        if (productInfo.getProductStatus() == ProductStatusEnum.DOWN.getCode()) {
-            throw new MyException(ResultEnum.PRODUCT_OFF_SALE);
-        }
-
-        // Check whether is in the cart
-        if (map.containsKey(itemForm.getProductId())) {
-            // Update quantity
-            Integer old = map.get(itemForm.getProductId()).getQuantity();
-            itemForm.setQuantity(old + itemForm.getQuantity());
-        }
-
-        map.put(itemForm.getProductId(), new Item(productInfo, itemForm.getQuantity()));
+    public Cart getCart(User user) {
+        return user.getCart();
     }
 
     @Override
-    public void removeItem(String productId) {
-        if (!map.containsKey(productId)) throw new MyException(ResultEnum.PRODUCT_NOT_IN_CART);
-        map.remove(productId);
+    @Transactional
+    public Cart mergeLocalCart(Collection<ProductInOrder> productInOrders, User user) {
+        Cart finalCart = user.getCart();
+        productInOrders.forEach(productInOrder -> {
+            Set<ProductInOrder> set = finalCart.getProducts();
+            Optional<ProductInOrder> old = set.stream().filter(e -> e.getProductId().equals(productInOrder.getProductId())).findFirst();
+            ProductInOrder prod;
+            if (old.isPresent()) {
+                prod = old.get();
+                prod.setCount(productInOrder.getCount() + prod.getCount());
+            } else {
+                prod = productInOrder;
+                prod.setCart(finalCart);
+                finalCart.getProducts().add(prod);
+            }
+            productInOrderRepository.save(prod);
+        });
+        cartRepository.save(finalCart);
+        return finalCart;
     }
 
     @Override
-    public void updateQuantity(String productId, Integer quantity) {
-        if (!map.containsKey(productId)) throw new MyException(ResultEnum.PRODUCT_NOT_IN_CART);
-        Item item = map.get(productId);
-        Integer max = item.getProductInfo().getProductStock();
-        if (quantity > 0) {
-            item.setQuantity(quantity > max ? max : quantity);
-        }
-    }
+    @Transactional
+    public Cart delete(String itemId, User user) {
+        var op = user.getCart().getProducts().stream().filter(e -> itemId.equals(e.getProductId())).findFirst();
+        op.ifPresent(productInOrder -> {
+            user.getCart().getProducts().remove(productInOrder);
+            userService.save(user);
+            productInOrderRepository.deleteById(productInOrder.getId());
 
-    @Override
-    public Collection<Item> findAll() {
-        return map.values();
+        });
+        return user.getCart();
     }
 
     @Override
     @Transactional
     public void checkout(User user) {
-        OrderMain orderMain = new OrderMain(user);
-        for (String productId : map.keySet()) {
-            Item item = map.get(productId);
-            ProductInOrder productInOrder = new ProductInOrder(item.getProductInfo(), item.getQuantity());
-            productInOrder.setOrderMain(orderMain);
-            orderMain.getProducts().add(productInOrder);
-            productService.decreaseStock(productId, item.getQuantity());
-        }
-        orderMain.setOrderAmount(getTotal());
-        orderRepository.save(orderMain);
-        map.clear();
-    }
+        // Creat an order
+        OrderMain order = new OrderMain(user);
+        orderRepository.save(order);
 
-    @Override
-    public BigDecimal getTotal() {
-        Collection<Item> items = findAll();
-        BigDecimal total = new BigDecimal(0);
-        for (Item item : items) {
-            BigDecimal price = item.getProductInfo().getProductPrice();
-            BigDecimal quantity = new BigDecimal(item.getQuantity());
-            total = total.add(price.multiply(quantity));
-        }
-        return total;
-    }
+        // clear cart's foreign key & set order's foreign key& decrease stock
+        user.getCart().getProducts().forEach(productInOrder -> {
+            productInOrder.setCart(null);
+            productInOrder.setOrderMain(order);
+            productService.decreaseStock(productInOrder.getProductId(), productInOrder.getCount());
+            productInOrderRepository.save(productInOrder);
+        });
 
-    @Override
-    public void mergeLocalCart(Collection<ProductInOrder> productInOrders, User user) {
-        Cart cart = user.getCart();
-        if (cart == null) {
-            cart = new Cart(user);
-        }
-        Cart finalCart = cart;
-        if (productInOrders != null) {
-            productInOrders.forEach(productInOrder -> {
-                Set<ProductInOrder> set = finalCart.getProducts();
-                Optional<ProductInOrder> old = set.stream().filter(e -> e.getProductId().equals(productInOrder.getProductId())).findFirst();
-                ProductInOrder prod;
-                if (old.isPresent()) {
-                    prod = old.get();
-                    prod.setCount(productInOrder.getCount() + prod.getCount());
-                } else {
-                    prod = productInOrder;
-                    prod.setCart(finalCart);
-                    finalCart.getProducts().add(prod);
-                }
-                productInOrderRepository.save(prod);
-            });
-        }
-        user.setCart(cart);
-        userRepository.save(user);
-        cartRepository.save(finalCart);
     }
 }

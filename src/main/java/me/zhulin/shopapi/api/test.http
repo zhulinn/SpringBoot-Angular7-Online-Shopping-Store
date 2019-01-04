@@ -27,36 +27,49 @@ Content-Type: application/json
 
 ###
 
+GET {{host-url}}/cart
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
 POST {{host-url}}/cart
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+Authorization: Bearer {{token}}
 
 [
 ]
 
 ###
 
-POST {{host-url}}/cart/B0002
+PUT {{host-url}}/cart/B0002
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+Authorization: Bearer {{token}}
 
-"3"
+1
+
+###
+POST {{host-url}}/cart/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "quantity": 4,
+  "productId": "B0002"
+}
 
 ###
 
 DELETE {{host-url}}/cart/B0002
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+Authorization: Bearer {{token}}
 
 ###
-POST {{host-url}}/cart/add
+
+POST {{host-url}}/cart/checkout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lcjFAZW1haWwuY29tIiwiaWF0IjoxNTQ2NDMzMTM0LCJleHAiOjE1NDY1MTk1MzR9.e4SxJC7iFgghXjFqjKfHZX1RkQY2fMgG55LAdqsl9BRxjKzvMfCJ0rh0Dk_BWdHRM7nILQY_wVJ8IZqYXWKMVg
+Authorization: Bearer {{token}}
 
-{
-  "quantity": 4,
-  "productId": "B0004"
-}
 
 ###
-

@@ -68,7 +68,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception{
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/cart/checkout/**").access("hasAnyRole('CUSTOMER')")
+                .antMatchers("/cart/**").access("hasAnyRole('CUSTOMER')")
+                .antMatchers("/order/finish/**").access("hasAnyRole('EMPLOYEE', 'MANAGER')")
+                .antMatchers("/order/**").authenticated()
+                .antMatchers("/profiles/**").authenticated()
+                .antMatchers("/seller/product/new").access("hasAnyRole('MANAGER')")
+                .antMatchers("/seller/**/delete").access("hasAnyRole( 'MANAGER')")
+                .antMatchers("/seller/**").access("hasAnyRole('EMPLOYEE', 'MANAGER')")
                 .anyRequest().permitAll()
 
                 .and()

@@ -33,7 +33,16 @@ public class Cart implements Serializable {
             mappedBy = "cart")
     private Set<ProductInOrder> products = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cartId=" + cartId +
+                ", products=" + products +
+                '}';
+    }
+
     public Cart(User user) {
         this.user  = user;
     }
+
 }

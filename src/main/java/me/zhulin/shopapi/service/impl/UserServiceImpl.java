@@ -47,12 +47,20 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             userRepository.save(user);
+
+            // initial cart when user register
+            if (user.getCart() == null) {
+                var saved = userRepository.findByEmail(user.getEmail());
+                saved.setCart(new Cart(saved));
+                userRepository.save(saved);
+            }
         } catch (Exception e) {
             throw new MyException(ResultEnum.VALID_ERROR);
         }
     }
 
     @Override
+    @Transactional
     public void update(User user) {
         User oldUser = userRepository.findByEmail(user.getEmail());
         oldUser.setPassword(passwordEncoder.encode(user.getPassword()));

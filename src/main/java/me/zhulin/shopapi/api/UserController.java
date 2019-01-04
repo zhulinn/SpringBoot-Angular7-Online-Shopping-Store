@@ -1,5 +1,6 @@
 package me.zhulin.shopapi.api;
 
+import me.zhulin.shopapi.entity.Cart;
 import me.zhulin.shopapi.entity.User;
 import me.zhulin.shopapi.repository.UserRepository;
 import me.zhulin.shopapi.security.JWT.JwtProvider;
@@ -50,9 +51,16 @@ public class UserController {
         } catch (AuthenticationException e) {
             return ResponseEntity.ok(null);
         }
-
-
     }
 
 
+    @PostMapping("/register")
+    public ResponseEntity register(@RequestBody User user) {
+        try {
+            userService.save(user);
+            return ResponseEntity.ok(null);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed");
+        }
+    }
 }
