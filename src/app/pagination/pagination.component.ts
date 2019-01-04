@@ -15,7 +15,7 @@ export class PaginationComponent implements OnInit {
   ngOnInit() {
   }
 
-  counter(i: number) {
+  counter(i = 1) {
     return new Array(i);
   }
 }

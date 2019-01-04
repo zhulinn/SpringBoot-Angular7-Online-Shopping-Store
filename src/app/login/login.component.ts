@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../shared/services/user.service";
-import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-login',
@@ -28,16 +28,20 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         let params = this.route.snapshot.queryParamMap;
         this.isLogout = params.has('logout');
-        // this.isInvalid = params.has('error');
+        this.returnUrl = params.get('returnUrl');
     }
 
     onSubmit() {
         this.submitted = true;
         this.userService.login(this.model).subscribe(
             user => {
-                if(user) {
+                if (user) {
+                    if (user.authorities[0].anthority != 'ROLE_CUSTOMER') {
+                        this.returnUrl = '/seller';
+                    }
+
                     this.router.navigateByUrl(this.returnUrl);
-                } else{
+                } else {
                     this.isLogout = false;
                     this.isInvalid = true;
                 }

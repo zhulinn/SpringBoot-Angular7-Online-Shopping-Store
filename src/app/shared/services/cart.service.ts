@@ -55,13 +55,20 @@ export class CartService {
     getCart(): Observable<ProductInOrder[]> {
         const localCart = this.getLocalCart();
         if (this.currentUser) {
-            return this.http.post<Cart>(this.cartUrl, localCart).pipe(
-                tap(cart => {
-                    this.clearLocalCart();
-                    console.log(cart.products);
-                }),
-                map(cart => cart.products),
-            );
+            if (localCart.length > 0) {
+                return this.http.post<Cart>(this.cartUrl, localCart).pipe(
+                    tap(_ => {
+                        this.clearLocalCart();
+                    }),
+                    map(cart => cart.products),
+                    catchError(_ => of([]))
+                );
+            } else {
+                return this.http.get<Cart>(this.cartUrl).pipe(
+                    map(cart => cart.products),
+                    catchError(_ => of([]))
+                );
+            }
         } else {
             return of(localCart);
         }
@@ -92,7 +99,7 @@ export class CartService {
 
         if (this.currentUser) {
             const url = `${this.cartUrl}/${productInOrder.productId}`;
-            return this.http.post<ProductInOrder>(url, productInOrder.count);
+            return this.http.put<ProductInOrder>(url, productInOrder.count);
         }
     }
 

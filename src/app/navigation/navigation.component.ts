@@ -16,19 +16,26 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   currentUserSubscription: Subscription;
   currentUser: JwtResponse;
+  root: string;
   constructor(private userService: UserService,
               private router: Router) {
     this.currentUserSubscription = this.userService.currentUser.subscribe(user => {
       this.currentUser = user;
+      if (!user || user.authorities[0].authority == 'ROLE_CUSTOMER') {
+        this.root = '/';
+      } else {
+        this.root = '/seller';
+      }
     });
   }
+
 
   ngOnInit() {
   }
 
   logout() {
     this.userService.logout();
-    this.router.navigate(['/login'], {queryParams: {logout: 'true'}} );
+    // this.router.navigate(['/login'], {queryParams: {logout: 'true'}} );
   }
 
 }

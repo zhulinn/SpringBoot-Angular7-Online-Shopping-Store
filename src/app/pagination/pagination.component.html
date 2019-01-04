@@ -12,15 +12,8 @@
           <li class="page-item  disabled"><a class="page-link">Previous</a></li>
       </ng-template>
 
-    <div *ngFor="let item of counter(currentPage?.totalPages); let i = index">
-        <li
-                class="page-item active"
-                *ngIf="currentPage?.number == i; else inactive"
-        >
-            <a class="page-link">{{ i + 1 }}</a>
-      </li>
-      <ng-template #inactive>
-        <li class="page-item">
+      <ng-container *ngFor="let item of counter(currentPage?.totalPages); let i = index">
+          <li class="page-item" *ngIf="currentPage && currentPage.number != i; else active">
             <a
                     class="page-link"
                     routerLink="./"
@@ -28,8 +21,15 @@
             >{{ i + 1 }}</a
             >
         </li>
-      </ng-template>
-    </div>
+          <ng-template #active>
+              <li
+                      class="page-item active"
+
+              >
+                  <a class="page-link">{{ i + 1 }}</a>
+              </li>
+          </ng-template>
+      </ng-container>
 
       <li
               class="page-item"

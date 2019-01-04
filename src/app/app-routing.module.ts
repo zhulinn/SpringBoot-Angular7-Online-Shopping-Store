@@ -5,28 +5,38 @@ import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {DetailComponent} from './detail/detail.component';
 import {CartComponent} from './cart/cart.component';
-import {MsgComponent} from "./msg/msg.component";
 import {AuthGuard} from "./_guards/auth.guard";
-import {Role} from "./shared/models/Role";
+import {OrderComponent} from "./order/order.component";
+import {OrderDetailComponent} from "./order-detail/order-detail.component";
+import {ProductListComponent} from "./product.list/product.list.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/product', pathMatch: 'full'},
+    {path: 'product/:id', component: DetailComponent},
+    {path: 'category/:id', component: CardComponent},
     {path: 'product', component: CardComponent},
     {path: 'category', component: CardComponent},
     {path: 'login', component: LoginComponent},
     {path: 'logout', component: LoginComponent},
     {path: 'register', component: SignupComponent},
-    {path: 'product/:id', component: DetailComponent},
-    {path: 'category/:id', component: CardComponent},
     {path: 'cart', component: CartComponent},
     {path: 'success', component: SignupComponent},
-    {path: 'cart/checkout', component: MsgComponent, data: {roles: [Role.Customer]}}
+    {path: 'order/:id', component: OrderDetailComponent, canActivate: [AuthGuard]},
+    {path: 'order', component: OrderComponent, canActivate: [AuthGuard]},
+    {path: 'seller', redirectTo: 'seller/product', pathMatch: 'full'},
+    {
+        path: 'seller/product',
+        component: ProductListComponent,
+        canActivate: [AuthGuard],
+        data: {roles: ['ROLE_MANAGER', 'ROLE_EMPLOYEE']}
+    }
+
 ];
 
 @NgModule({
     declarations: [],
     imports: [
-        RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
+        RouterModule.forRoot(routes)//{onSameUrlNavigation: 'reload'}
     ],
     exports: [RouterModule]
 })

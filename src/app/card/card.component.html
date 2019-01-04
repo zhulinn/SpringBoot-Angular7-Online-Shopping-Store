@@ -2,7 +2,7 @@
 <div class="row card-deck text-center">
   <div *ngFor="let productInfo of page?.content" class="col-lg-4 ">
     <div class="card mb-4"  >
-      <img height="50%" class="card-img-top" src="{{productInfo.productIcon}}">
+      <img height="50%" class="card-img-top" src="{{productInfo.productIcon}}" alt="{{productInfo.productName}}">
       <div class="card-body">
         <h4 class="card-title ">{{productInfo.productName}}</h4>
         <div class="text-left">

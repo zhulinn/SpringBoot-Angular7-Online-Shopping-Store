@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="/">
+    <a class="navbar-brand" [routerLink]=root>
         <img src="/assets/brand.png" width="30" height="30" class="d-inline-block align-top" alt="">
         E-Shop
     </a>
@@ -10,7 +10,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
 
-        <div class="navbar-nav">
+        <div class="navbar-nav" *ngIf="!currentUser || currentUser.authorities[0].authority == 'ROLE_CUSTOMER'">
 
             <a class="nav-item nav-link "
                routerLink="/category/0">
@@ -32,7 +32,8 @@
         </div>
 
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link " routerLink="/cart">
+            <a *ngIf="!currentUser || currentUser.authorities[0].authorities == 'ROLE_CUSTOMER'"
+                    class="nav-item nav-link " routerLink="/cart">
                 <i class="fa fa-shopping-cart"></i>
                 Cart
             </a>
@@ -45,7 +46,7 @@
                 <a class="nav-item nav-link " routerLink="/profiles">
                     {{currentUser.name}}
                 </a>
-                <a class="nav-item nav-link " (click)="logout()">
+                <a class="nav-item nav-link " (click)="logout()" routerLink="/login" queryParams="{logout: true}">
                     Sign Out
                 </a>
             </ng-container>

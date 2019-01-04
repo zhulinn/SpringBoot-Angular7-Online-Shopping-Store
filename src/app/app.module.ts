@@ -17,6 +17,9 @@ import {CookieService} from "ngx-cookie-service";
 import {ErrorInterceptor} from "./_interceptors/error-interceptor.service";
 import {JwtInterceptor} from "./_interceptors/jwt-interceptor.service";
 import {MsgComponent} from './msg/msg.component';
+import {OrderComponent} from './order/order.component';
+import {OrderDetailComponent} from './order-detail/order-detail.component';
+import {ProductListComponent} from './product.list/product.list.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +32,10 @@ import {MsgComponent} from './msg/msg.component';
         SignupComponent,
         DetailComponent,
         CartComponent,
-        MsgComponent
+        MsgComponent,
+        OrderComponent,
+        OrderDetailComponent,
+        ProductListComponent
     ],
     imports: [
         BrowserModule,
@@ -40,7 +46,7 @@ import {MsgComponent} from './msg/msg.component';
     ],
     providers: [CookieService,
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},],
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
     bootstrap: [AppComponent]
 })
 export class AppModule {
