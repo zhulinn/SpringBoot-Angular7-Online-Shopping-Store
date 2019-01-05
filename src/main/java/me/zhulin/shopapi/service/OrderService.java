@@ -4,7 +4,6 @@ package me.zhulin.shopapi.service;
 import me.zhulin.shopapi.entity.OrderMain;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 /**
  * Created By Zhu Lin on 3/14/2018.
@@ -22,9 +21,8 @@ public interface OrderService {
     OrderMain findOne(Long orderId);
 
 
+    OrderMain finish(Long orderId);
 
-    void finish(Long orderId);
-
-    void  cancel(Long orderId);
+    OrderMain cancel(Long orderId);
 
 }

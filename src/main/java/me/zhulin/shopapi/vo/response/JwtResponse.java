@@ -1,9 +1,6 @@
 package me.zhulin.shopapi.vo.response;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 /**
  * Created By Zhu Lin on 1/1/2019.
@@ -14,12 +11,12 @@ public class JwtResponse {
     private String type = "Bearer";
     private String account;
     private String name;
-    private Collection<? extends GrantedAuthority> authorities;
+    private String role;
 
-    public JwtResponse(String token, String account, String name, Collection<? extends GrantedAuthority> authorities) {
+    public JwtResponse(String token, String account, String name, String role) {
         this.account = account;
         this.name = name;
         this.token = token;
-        this.authorities = authorities;
+        this.role = role;
     }
 }

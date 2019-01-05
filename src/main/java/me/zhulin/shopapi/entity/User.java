@@ -4,15 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created By Zhu Lin on 3/12/2018.
@@ -43,19 +40,14 @@ public class User implements Serializable {
     @NotNull
     private boolean active;
     @NotEmpty
-    private String role;
+    private String role = "ROLE_CUSTOMER";
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore  // fix bi-direction toString() recursion problem
-    private Cart cart = new Cart();
+    private Cart cart;
 
 
-    public Collection<GrantedAuthority> getAuthorities() {
-        GrantedAuthority grantedAuthority = (GrantedAuthority) () -> role;
-        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(grantedAuthority);
-        return grantedAuthorities;
-    }
+
 
     @Override
     public String toString() {
@@ -68,7 +60,6 @@ public class User implements Serializable {
                 ", address='" + address + '\'' +
                 ", active=" + active +
                 ", role='" + role + '\'' +
-                ", cart=" + cart.getCartId() +
                 '}';
     }
 

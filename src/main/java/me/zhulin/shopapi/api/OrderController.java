@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -43,32 +42,33 @@ public class OrderController {
     }
 
 
-    @PutMapping("/order/cancel/{id}")
-    public ResponseEntity cancel(@PathVariable("id") Long orderId, Authentication authentication) {
+    @PatchMapping("/order/cancel/{id}")
+    public ResponseEntity<OrderMain> cancel(@PathVariable("id") Long orderId, Authentication authentication) {
         OrderMain orderMain = orderService.findOne(orderId);
-        if (authentication.getName() != orderMain.getBuyerEmail() && authentication.getAuthorities().contains("ROLE_CUSTOMER")) {
+        if (!authentication.getName().equals(orderMain.getBuyerEmail()) && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CUSTOMER"))) {
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        orderService.cancel(orderId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(orderService.cancel(orderId));
     }
 
-    @PutMapping("/order/finish/{id}")
-    public ResponseEntity finish(@PathVariable("id") Long orderId) {
-        orderService.finish(orderId);
-        return ResponseEntity.ok().build();
+    @PatchMapping("/order/finish/{id}")
+    public ResponseEntity<OrderMain> finish(@PathVariable("id") Long orderId, Authentication authentication) {
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CUSTOMER"))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(orderService.finish(orderId));
     }
 
-    @GetMapping("/order/show/{id}")
-    public ResponseEntity<Collection<ProductInOrder>> show(@PathVariable("id") Long orderId, Authentication authentication) {
+    @GetMapping("/order/{id}")
+    public ResponseEntity show(@PathVariable("id") Long orderId, Authentication authentication) {
         boolean isCustomer = authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         OrderMain orderMain = orderService.findOne(orderId);
-        if (isCustomer && !userDetails.getUsername().equals(orderMain.getBuyerEmail())) {
+        if (isCustomer && !authentication.getName().equals(orderMain.getBuyerEmail())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         Collection<ProductInOrder> items = orderMain.getProducts();
-        return ResponseEntity.ok(items);
+        return ResponseEntity.ok(orderMain);
     }
 }

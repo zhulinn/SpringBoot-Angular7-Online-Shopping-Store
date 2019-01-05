@@ -37,22 +37,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderMain> findAll(Pageable pageable) {
-        return orderRepository.findAllByOrderByOrderStatusAscCreateTimeAsc(pageable);
+        return orderRepository.findAllByOrderByOrderStatusAscCreateTimeDesc(pageable);
     }
 
     @Override
     public Page<OrderMain> findByStatus(Integer status, Pageable pageable) {
-        return orderRepository.findAllByOrderStatusOrderByCreateTimeAsc(status, pageable);
+        return orderRepository.findAllByOrderStatusOrderByCreateTimeDesc(status, pageable);
     }
 
     @Override
     public Page<OrderMain> findByBuyerEmail(String email, Pageable pageable) {
-        return orderRepository.findAllByBuyerEmailOrderByOrderStatusAscCreateTimeAsc(email, pageable);
+        return orderRepository.findAllByBuyerEmailOrderByOrderStatusAscCreateTimeDesc(email, pageable);
     }
 
     @Override
     public Page<OrderMain> findByBuyerPhone(String phone, Pageable pageable) {
-        return orderRepository.findAllByBuyerPhoneOrderByOrderStatusAscCreateTimeAsc(phone, pageable);
+        return orderRepository.findAllByBuyerPhoneOrderByOrderStatusAscCreateTimeDesc(phone, pageable);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void finish(Long orderId) {
+    public OrderMain finish(Long orderId) {
         OrderMain orderMain = findOne(orderId);
         if(!orderMain.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
             throw new MyException(ResultEnum.ORDER_STATUS_ERROR);
@@ -74,11 +74,12 @@ public class OrderServiceImpl implements OrderService {
 
         orderMain.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
         orderRepository.save(orderMain);
+        return orderRepository.findByOrderId(orderId);
     }
 
     @Override
     @Transactional
-    public void cancel(Long orderId) {
+    public OrderMain cancel(Long orderId) {
         OrderMain orderMain = findOne(orderId);
         if(!orderMain.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
             throw new MyException(ResultEnum.ORDER_STATUS_ERROR);
@@ -95,5 +96,7 @@ public class OrderServiceImpl implements OrderService {
                 productService.increaseStock(productInOrder.getProductId(), productInOrder.getCount());
             }
         }
+        return orderRepository.findByOrderId(orderId);
+
     }
 }

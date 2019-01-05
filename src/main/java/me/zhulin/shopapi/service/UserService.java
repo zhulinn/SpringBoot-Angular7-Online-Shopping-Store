@@ -13,7 +13,7 @@ public interface UserService {
 
     Collection<User> findByRole(String role);
 
-    void save(User user);
+    User save(User user);
 
-    void update(User user);
+    User update(User user);
 }
