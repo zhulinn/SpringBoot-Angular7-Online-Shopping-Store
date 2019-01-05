@@ -9,7 +9,7 @@ spring:
     initialization-mode: always
     continue-on-error: true
   jpa:
-    show-sql: true
+    show-sql: false
 #    generate-ddl: false
     hibernate:
       ddl-auto: create
