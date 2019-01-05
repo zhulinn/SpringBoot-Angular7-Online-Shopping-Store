@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, of} from "rxjs";
-import {ProductInOrder} from "../shared/models/ProductInOrder";
+import {Observable} from "rxjs";
 import {OrderService} from "../shared/services/order.service";
 import {Order} from "../shared/models/Order";
 import {ActivatedRoute} from "@angular/router";
-import {map, switchMap} from "rxjs/operators";
 
 @Component({
     selector: 'app-order-detail',
@@ -17,14 +15,14 @@ export class OrderDetailComponent implements OnInit {
                 private route: ActivatedRoute) {
     }
 
-    items$: Observable<ProductInOrder[]>;
+    order$: Observable<Order>;
 
     ngOnInit() {
         // this.items$ = this.route.paramMap.pipe(
         //     map(paramMap =>paramMap.get('id')),
         //     switchMap((id:string) => this.orderService.show(id))
         // )
-        this.items$ = this.orderService.show(this.route.snapshot.paramMap.get('id'));
+        this.order$ = this.orderService.show(this.route.snapshot.paramMap.get('id'));
     }
 
 }

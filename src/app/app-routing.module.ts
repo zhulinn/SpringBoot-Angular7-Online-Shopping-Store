@@ -42,7 +42,13 @@ const routes: Routes = [
         component: ProductEditComponent,
         canActivate: [AuthGuard],
         data: {roles: ['ROLE_MANAGER', 'ROLE_EMPLOYEE']}
-    }
+    },
+    {
+        path: 'seller/product/:id/new',
+        component: ProductEditComponent,
+        canActivate: [AuthGuard],
+        data: {roles: ['ROLE_EMPLOYEE']}
+    },
 
 ];
 

@@ -1,5 +1,4 @@
 <h1 align="center" class="display-4 mb-5">Order Detail</h1>
-
 <table class="table table-striped text-center">
     <thead>
     <tr>
@@ -13,13 +12,12 @@
     </tr>
     </thead>
     <tbody>
-
-    <tr *ngFor="let item of items$ | async">
+    <tr *ngFor="let item of (order$ | async)?.products">
         <th class="align-middle" scope="row">
-            <a routerLink="/product/{{item.productId}}"><img height="100px" src="{{item.productIcon}}"
-                                                             alt="{{item.productName}}"></a>
+            <a routerLink="/seller/product/{{item.productId}}/edit"><img height="100px" src="{{item.productIcon}}"
+                                                                         alt="{{item.productName}}"></a>
         </th>
-        <td class="align-middle"><a routerLink="/product/{{item.productId}}">{{item.productName}}</a></td>
+        <td class="align-middle"><a routerLink="/seller/product/{{item.productId}}/edit">{{item.productName}}</a></td>
         <td class="align-middle">{{item.productDescription}}</td>
         <td class="align-middle">{{item.productPrice | currency}}</td>
         <td class="align-middle">{{item.count}}</td>
@@ -27,3 +25,4 @@
     </tr>
     </tbody>
 </table>
+<h5 style="display: inline" class="float-right">Total: {{(order$ | async)?.orderAmount | currency}}</h5>

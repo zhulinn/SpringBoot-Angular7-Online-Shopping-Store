@@ -34,9 +34,27 @@ export class ProductService {
     getDetail(id: String): Observable<ProductInfo> {
         const url = `${this.productUrl}/${id}`;
         return this.http.get<ProductInfo>(url).pipe(
-            catchError(_ => of(null))
+            catchError(_ => {
+                console.log("Get Detail Failed");
+                return of(new ProductInfo());
+            })
         );
+    }
 
+    update(productInfo: ProductInfo): Observable<ProductInfo> {
+        const url = `${apiUrl}/seller/product/${productInfo.productId}/edit`;
+        return this.http.put<ProductInfo>(url, productInfo);
+    }
+
+    create(productInfo: ProductInfo): Observable<ProductInfo> {
+        const url = `${apiUrl}/seller/product/new`;
+        return this.http.post<ProductInfo>(url, productInfo);
+    }
+
+
+    delelte(productInfo: ProductInfo): Observable<any> {
+        const url = `${apiUrl}/seller/product/${productInfo.productId}/delete`;
+        return this.http.delete(url);
     }
 
 

@@ -3,7 +3,8 @@
   <form #form="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label><b>Email address</b></label>
-      <input [value]=user?.email type="email" class="form-control form-control-lg " disabled id="email" name="email" placeholder="Enter email">
+        <input readonly [value]=user?.email type="email" class="form-control form-control-lg " disabled id="email"
+               name="email" placeholder="Enter email">
     </div>
     <div class="form-group">
       <label><b>Name</b></label>

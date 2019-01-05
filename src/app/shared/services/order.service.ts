@@ -4,7 +4,6 @@ import {apiUrl} from "../mockData";
 import {catchError} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {Order} from "../models/Order";
-import {ProductInOrder} from "../models/ProductInOrder";
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +19,7 @@ export class OrderService {
         return this.http.get(`${this.orderUrl}?page=${page}&size=${size}`).pipe();
     }
 
-    show(id): Observable<ProductInOrder[]> {
+    show(id): Observable<Order> {
         return this.http.get<Order>(`${this.orderUrl}/${id}`).pipe(
             catchError(_ => of(null))
         );

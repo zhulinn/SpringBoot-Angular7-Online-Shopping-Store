@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../shared/services/user.service";
 import {ProductService} from "../shared/services/product.service";
 import {JwtResponse} from "../shared/response/JwtResponse";
@@ -6,13 +6,14 @@ import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {CategoryType} from "../shared/models/CategoryType";
 import {ProductStatus} from "../shared/models/ProductStatus";
+import {ProductInfo} from "../shared/models/productInfo";
 
 @Component({
     selector: 'app-product.list',
     templateUrl: './product.list.component.html',
     styleUrls: ['./product.list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
 
     constructor(private userService: UserService,
                 private productService: ProductService,
@@ -53,12 +54,13 @@ export class ProductListComponent implements OnInit {
 
     }
 
-    edit(productInfo) {
 
-    }
-
-    remove(productInfos, productInfo) {
-
+    remove(productInfos: ProductInfo[], productInfo) {
+        this.productService.delelte(productInfo).subscribe(_ => {
+                productInfos = productInfos.filter(e => e.productId != productInfo);
+            },
+            err => {
+            });
     }
 
 

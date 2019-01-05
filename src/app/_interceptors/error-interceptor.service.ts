@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {UserService} from "../shared/services/user.service";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.router.navigate(['/login']);
       }
 
-      const error = err.error.message || err.statusText;
+        const error = err.error || err.statusText;
       return throwError(error);
     }))
   }
