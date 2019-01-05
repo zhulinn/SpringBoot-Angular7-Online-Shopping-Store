@@ -21,6 +21,7 @@ import {OrderComponent} from './order/order.component';
 import {OrderDetailComponent} from './order-detail/order-detail.component';
 import {ProductListComponent} from './product.list/product.list.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
         OrderDetailComponent,
         ProductListComponent,
         UserDetailComponent,
+        ProductEditComponent,
 
     ],
     imports: [

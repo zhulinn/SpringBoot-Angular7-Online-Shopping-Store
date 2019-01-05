@@ -3,20 +3,12 @@
   <form #form="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label><b>Email address</b></label>
-      <input value="user.email" type="email" class="form-control form-control-lg disabled" id="email" name="email" placeholder="Enter email" email required autofocus  #email="ngModel">
-      <div  *ngIf="email.invalid && (email.dirty ||email.touched)" >
-        <div *ngIf="email.errors.required" >
-          Email is required.
-        </div>
-        <div *ngIf="email.errors.email">
-          Invalid Email.
-        </div>
-      </div>
+      <input [value]=user?.email type="email" class="form-control form-control-lg " disabled id="email" name="email" placeholder="Enter email">
     </div>
     <div class="form-group">
       <label><b>Name</b></label>
-      <input [(ngModel)]="user.name" type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Your name" required #name="ngModel">
-      <div  *ngIf="name.invalid && (name.dirty ||name.touched)">
+      <input [(ngModel)]="user.name" type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Your name" required #name="ngModel" autofocus>
+      <div  *ngIf="name.invalid && (name.dirty || name.touched)">
         <div *ngIf="name.errors.required">
           Name is required.
         </div>
@@ -56,7 +48,7 @@
       </div>
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!form.form.valid" >Sign Up</button>
+      <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!form.form.valid" >Update</button>
     </div>
   </form>
 </div>

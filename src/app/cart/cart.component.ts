@@ -5,7 +5,7 @@ import {UserService} from '../shared/services/user.service';
 import {JwtResponse} from '../shared/response/JwtResponse';
 import {ProductInOrder} from '../shared/models/ProductInOrder';
 import {debounceTime, switchMap} from 'rxjs/operators';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-cart',
@@ -100,9 +100,9 @@ export class CartComponent implements OnInit, OnDestroy, AfterContentChecked {
 
     checkout() {
         if (!this.currentUser) {
-            this.router.navigate(['/login']);
-        } else if (this.currentUser.authorities[0].authority !== 'ROLE_CUSTOMER') {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+        } else if (this.currentUser.role !== 'ROLE_CUSTOMER') {
+            this.router.navigate(['/seller']);
         } else {
             this.cartService.checkout().subscribe(
                 _ => {

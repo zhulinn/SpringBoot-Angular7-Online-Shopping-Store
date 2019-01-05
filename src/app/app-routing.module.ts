@@ -10,6 +10,7 @@ import {OrderComponent} from "./order/order.component";
 import {OrderDetailComponent} from "./order-detail/order-detail.component";
 import {ProductListComponent} from "./product.list/product.list.component";
 import {UserDetailComponent} from "./user-detail/user-detail.component";
+import {ProductEditComponent} from "./product-edit/product-edit.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/product', pathMatch: 'full'},
@@ -32,9 +33,15 @@ const routes: Routes = [
         data: {roles: ['ROLE_MANAGER', 'ROLE_EMPLOYEE']}
     },
     {
-        path: 'profiles',
+        path: 'profile',
         component: UserDetailComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path: 'seller/product/:id/edit',
+        component: ProductEditComponent,
+        canActivate: [AuthGuard],
+        data: {roles: ['ROLE_MANAGER', 'ROLE_EMPLOYEE']}
     }
 
 ];

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {apiUrl} from '../mockData';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {JwtResponse} from '../response/JwtResponse';
 import {CookieService} from 'ngx-cookie-service';
@@ -14,8 +14,8 @@ export class UserService {
 
     private currentUserSubject: BehaviorSubject<JwtResponse>;
     public currentUser: Observable<JwtResponse>;
-
-
+    public nameTerms = new Subject<string>();
+    public name$ = this.nameTerms.asObservable();
     constructor(private http: HttpClient,
                 private cookieService: CookieService) {
         const memo = localStorage.getItem('currentUser');
@@ -38,7 +38,10 @@ export class UserService {
                     if (loginForm.remembered) {
                         localStorage.setItem('currentUser', JSON.stringify(user));
                     }
+                    console.log((user.name));
+                    this.nameTerms.next(user.name);
                     this.currentUserSubject.next(user);
+                    return user;
                 }
             }),
             catchError(this.handleError('Login Failed', null))
@@ -57,8 +60,8 @@ export class UserService {
     }
 
     update(user: User): Observable<User> {
-        return this.signUp(user);
-    }
+        const url = `${apiUrl}/profile`;
+        return this.http.put<User>(url, user);    }
 
     get(email: string): Observable<User> {
         const url = `${apiUrl}/profile/${email}`;

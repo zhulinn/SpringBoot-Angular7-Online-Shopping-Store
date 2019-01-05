@@ -3,7 +3,7 @@ export class JwtResponse {
     type: string;
     account: string;
     name: string;
-    authorities: any[];
+    role: string;
 
 }
 
