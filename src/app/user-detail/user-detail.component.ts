@@ -3,6 +3,7 @@ import {UserService} from "../shared/services/user.service";
 import {User} from "../shared/models/User";
 import {Router} from "@angular/router";
 import {Observable, Subject} from "rxjs";
+import {Role} from "../shared/enum/Role";
 
 @Component({
     selector: 'app-user-detail',
@@ -36,7 +37,7 @@ export class UserDetailComponent implements OnInit {
         this.userService.update(this.user).subscribe(u => {
             this.userService.nameTerms.next(u.name);
             let url = '/';
-            if (this.user.role != 'ROLE_CUSTOMER') {
+            if (this.user.role != Role.Customer) {
                 url = '/seller';
             }
             this.router.navigateByUrl(url);

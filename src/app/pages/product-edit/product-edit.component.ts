@@ -1,6 +1,6 @@
 import {AfterContentChecked, Component, OnInit} from '@angular/core';
-import {ProductInfo} from "../shared/models/productInfo";
-import {ProductService} from "../shared/services/product.service";
+import {ProductInfo} from "../../shared/models/productInfo";
+import {ProductService} from "../../shared/services/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({

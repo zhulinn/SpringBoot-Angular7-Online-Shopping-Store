@@ -10,7 +10,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
 
-        <div class="navbar-nav" *ngIf="!currentUser || currentUser.role == 'ROLE_CUSTOMER'">
+        <div class="navbar-nav" *ngIf="!currentUser || currentUser.role == Role.Customer">
 
             <a class="nav-item nav-link "
                routerLink="/category/0">
@@ -32,7 +32,7 @@
         </div>
 
         <div class="navbar-nav ml-auto">
-            <a *ngIf="!currentUser || currentUser.role == 'ROLE_CUSTOMER'"
+            <a *ngIf="!currentUser || currentUser.role == Role.Customer"
                     class="nav-item nav-link " routerLink="/cart">
                 <i class="fas fa-shopping-cart"></i>
                 Cart

@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserService} from "../shared/services/user.service";
+import {UserService} from "../../shared/services/user.service";
 import {Subscription} from "rxjs";
-import {JwtResponse} from "../shared/response/JwtResponse";
+import {JwtResponse} from "../../shared/response/JwtResponse";
 import {Router} from "@angular/router";
+import {Role} from "../../shared/enum/Role";
 
 @Component({
     selector: 'app-navigation',
@@ -17,6 +18,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
     name: string;
     currentUser: JwtResponse;
     root = '/';
+    Role = Role;
 
     constructor(private userService: UserService,
                 private router: Router,
@@ -29,7 +31,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
         this.name$ = this.userService.name$.subscribe(aName => this.name = aName);
         this.currentUserSubscription = this.userService.currentUser.subscribe(user => {
             this.currentUser = user;
-            if (!user || user.role == 'ROLE_CUSTOMER') {
+            if (!user || user.role == Role.Customer) {
                 this.root = '/';
             } else {
                 this.root = '/seller';

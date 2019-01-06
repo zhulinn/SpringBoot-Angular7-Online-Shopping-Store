@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductService} from '../shared/services/product.service';
+import {ProductService} from '../../shared/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CartService} from '../shared/services/cart.service';
+import {CartService} from '../../shared/services/cart.service';
 import {CookieService} from 'ngx-cookie-service';
-import {ProductInOrder} from '../shared/models/ProductInOrder';
-import {ProductInfo} from '../shared/models/productInfo';
+import {ProductInOrder} from '../../shared/models/ProductInOrder';
+import {ProductInfo} from '../../shared/models/productInfo';
 
 @Component({
   selector: 'app-detail',

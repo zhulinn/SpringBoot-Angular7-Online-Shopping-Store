@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {OrderService} from "../shared/services/order.service";
-import {Order} from "../shared/models/Order";
-import {OrderStatus} from "../shared/models/OrderStatus";
-import {UserService} from "../shared/services/user.service";
-import {JwtResponse} from "../shared/response/JwtResponse";
+import {OrderService} from "../../shared/services/order.service";
+import {Order} from "../../shared/models/Order";
+import {OrderStatus} from "../../shared/enum/OrderStatus";
+import {UserService} from "../../shared/services/user.service";
+import {JwtResponse} from "../../shared/response/JwtResponse";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {Role} from "../../shared/enum/Role";
 
 @Component({
     selector: 'app-order',
@@ -18,7 +19,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     page: any;
     OrderStatus = OrderStatus;
     currentUser: JwtResponse;
-
+    Role = Role;
     constructor(private httpClient: HttpClient,
                 private orderService: OrderService,
                 private userService: UserService,

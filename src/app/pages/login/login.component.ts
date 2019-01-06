@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../shared/services/user.service";
+import {UserService} from "../../shared/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Role} from "../../shared/enum/Role";
 
 @Component({
     selector: 'app-login',
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
         this.userService.login(this.model).subscribe(
             user => {
                 if (user) {
-                    if (user.role != 'ROLE_CUSTOMER') {
+                    if (user.role != Role.Customer) {
 
                         this.returnUrl = '/seller';
                     }

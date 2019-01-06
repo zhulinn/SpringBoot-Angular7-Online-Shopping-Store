@@ -28,12 +28,12 @@
         <td class="align-middle">{{order.createTime | date}}</td>
         <td class="align-middle">{{OrderStatus[order.orderStatus]}}</td>
         <td class="align-middle">
-            <a *ngIf="!(currentUser.role == 'ROLE_CUSTOMER' && currentUser.name == order.buyerEmail)"
+            <a *ngIf="!(currentUser.role == Role.Customer && currentUser.name == order.buyerEmail)"
                style="display:
             block" href="" routerLink="/order/{{order.orderId}}">
                 Show</a>
             <a *ngIf="order.orderStatus == 0" style="display: block" (click)="cancel(order)" routerLink="./">Cancel</a>
-            <a *ngIf="currentUser.role != 'ROLE_CUSTOMER' && order.orderStatus == 0"
+            <a *ngIf="currentUser.role != Role.Customer && order.orderStatus == 0"
                style="display: block"
                (click)="finish(order)"
                routerLink="./">

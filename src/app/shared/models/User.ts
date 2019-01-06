@@ -1,3 +1,5 @@
+import {Role} from "../enum/Role";
+
 export class User {
 
     email: string;
@@ -16,6 +18,6 @@ export class User {
 
     constructor(){
         this.active = true;
-        this.role = 'ROLE_CUSTOMER';
+        this.role = Role.Customer;
     }
 }

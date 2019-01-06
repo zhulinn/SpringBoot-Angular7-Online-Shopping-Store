@@ -6,6 +6,7 @@ import {JwtResponse} from '../shared/response/JwtResponse';
 import {ProductInOrder} from '../shared/models/ProductInOrder';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from "@angular/router";
+import {Role} from "../shared/enum/Role";
 
 @Component({
     selector: 'app-cart',
@@ -101,7 +102,7 @@ export class CartComponent implements OnInit, OnDestroy, AfterContentChecked {
     checkout() {
         if (!this.currentUser) {
             this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
-        } else if (this.currentUser.role !== 'ROLE_CUSTOMER') {
+        } else if (this.currentUser.role !== Role.Customer) {
             this.router.navigate(['/seller']);
         } else {
             this.cartService.checkout().subscribe(
