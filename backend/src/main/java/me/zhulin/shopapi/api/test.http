@@ -1,0 +1,158 @@
+GET {{host-url}}/product
+
+###
+
+GET {{host-url}}/cart
+
+###
+
+POST {{host-url}}/cart
+Content-Type: application/json
+
+{
+  "productId": "B0001",
+  "quantity": 4
+}
+
+###
+
+POST {{host-url}}/login
+Content-Type: application/json
+
+{
+  "username": "manager1@email.com",
+  "password": "123",
+  "rem": true
+}
+
+###
+
+GET {{host-url}}/cart
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+POST {{host-url}}/cart
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+[
+]
+
+###
+
+PUT {{host-url}}/cart/B0002
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+1
+
+###
+POST {{host-url}}/cart/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "quantity": 4,
+  "productId": "B0002"
+}
+
+###
+
+DELETE {{host-url}}/cart/B0002
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+POST {{host-url}}/cart/checkout
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+
+GET {{host-url}}/order/finish/2147483643
+Authorization: Bearer {{token}}
+
+###
+
+GET {{host-url}}/order/2147483643
+Authorization: Bearer {{token}}
+
+###
+
+GET {{host-url}}/profile/manager1@email.com
+Authorization: Bearer {{token}}
+
+
+
+###
+
+PUT {{host-url}}/profile
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 2147483641,
+  "email": "customer1@email.com",
+  "password": "1234",
+  "name": "customer1",
+  "phone": "6789",
+  "address": "3200 West Road",
+  "active": false,
+  "role": "ROLE_CUSTOMER",
+  "authorities": [
+    {
+      "authority": "ROLE_CUSTOMER"
+    }
+  ]
+}
+
+###
+
+GET {{host-url}}/product/B0003
+
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+PUT {{host-url}}/seller/product/B0002/edit
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": "B0002",
+  "productName": "Spring In Action",
+  "productPrice": 20.00,
+  "productStock": 195,
+  "productDescription": "Learn Spring",
+  "productIcon": "https://images-na.ssl-images-amazon.com/images/I/51gHy16h5TL._SX397_BO1,204,203,200_.jpg",
+  "productStatus": 1,
+  "categoryType": 0,
+  "updateTime": "2019-01-05T03:43:29.047+0000"
+}
+
+###
+
+POST {{host-url}}/seller/product/new
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+
+{
+  "productId": "B0022",
+  "productName": "Spring In Action",
+  "productPrice": 20.00,
+  "productStock": 195,
+  "productDescription": "Learn Spring",
+  "productIcon": "https://images-na.ssl-images-amazon.com/images/I/51gHy16h5TL._SX397_BO1,204,203,200_.jpg",
+  "productStatus": 0,
+  "categoryType": 1
+}
+
+###
