@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {OrderService} from "../../shared/services/order.service";
-import {Order} from "../../shared/models/Order";
-import {OrderStatus} from "../../shared/enum/OrderStatus";
-import {UserService} from "../../shared/services/user.service";
-import {JwtResponse} from "../../shared/response/JwtResponse";
+import {OrderService} from "../../services/order.service";
+import {Order} from "../../models/Order";
+import {OrderStatus} from "../../enum/OrderStatus";
+import {UserService} from "../../services/user.service";
+import {JwtResponse} from "../../response/JwtResponse";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {Role} from "../../shared/enum/Role";
+import {Role} from "../../enum/Role";
 
 @Component({
     selector: 'app-order',

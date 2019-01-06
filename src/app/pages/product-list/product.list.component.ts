@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserService} from "../../shared/services/user.service";
-import {ProductService} from "../../shared/services/product.service";
-import {JwtResponse} from "../../shared/response/JwtResponse";
+import {UserService} from "../../services/user.service";
+import {ProductService} from "../../services/product.service";
+import {JwtResponse} from "../../response/JwtResponse";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {CategoryType} from "../../shared/enum/CategoryType";
-import {ProductStatus} from "../../shared/enum/ProductStatus";
-import {ProductInfo} from "../../shared/models/productInfo";
-import {Role} from "../../shared/enum/Role";
+import {CategoryType} from "../../enum/CategoryType";
+import {ProductStatus} from "../../enum/ProductStatus";
+import {ProductInfo} from "../../models/productInfo";
+import {Role} from "../../enum/Role";
 
 @Component({
     selector: 'app-product.list',

@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserService} from "../../shared/services/user.service";
+import {UserService} from "../../services/user.service";
 import {Subscription} from "rxjs";
-import {JwtResponse} from "../../shared/response/JwtResponse";
+import {JwtResponse} from "../../response/JwtResponse";
 import {Router} from "@angular/router";
-import {Role} from "../../shared/enum/Role";
+import {Role} from "../../enum/Role";
 
 @Component({
     selector: 'app-navigation',

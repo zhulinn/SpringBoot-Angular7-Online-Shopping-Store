@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../shared/services/user.service";
+import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Role} from "../../shared/enum/Role";
+import {Role} from "../../enum/Role";
 
 @Component({
     selector: 'app-login',

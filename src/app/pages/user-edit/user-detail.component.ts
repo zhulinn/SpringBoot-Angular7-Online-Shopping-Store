@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../shared/services/user.service";
-import {User} from "../shared/models/User";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/User";
 import {Router} from "@angular/router";
 import {Observable, Subject} from "rxjs";
-import {Role} from "../shared/enum/Role";
+import {Role} from "../../enum/Role";
 
 @Component({
     selector: 'app-user-detail',

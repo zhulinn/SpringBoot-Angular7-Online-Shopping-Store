@@ -1,17 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CardComponent} from './card/card.component';
+import {CardComponent} from './pages/card/card.component';
 import {LoginComponent} from './pages/login/login.component';
 import {SignupComponent} from './pages/signup/signup.component';
-import {DetailComponent} from './pages/productDetail/detail.component';
-import {CartComponent} from './cart/cart.component';
+import {DetailComponent} from './pages/product-detail/detail.component';
+import {CartComponent} from './pages/cart/cart.component';
 import {AuthGuard} from "./_guards/auth.guard";
 import {OrderComponent} from "./pages/order/order.component";
 import {OrderDetailComponent} from "./pages/order-detail/order-detail.component";
-import {ProductListComponent} from "./pages/product.list/product.list.component";
-import {UserDetailComponent} from "./user-detail/user-detail.component";
+import {ProductListComponent} from "./pages/product-list/product.list.component";
+import {UserDetailComponent} from "./pages/user-edit/user-detail.component";
 import {ProductEditComponent} from "./pages/product-edit/product-edit.component";
-import {Role} from "./shared/enum/Role";
+import {Role} from "./enum/Role";
 
 const routes: Routes = [
     {path: '', redirectTo: '/product', pathMatch: 'full'},

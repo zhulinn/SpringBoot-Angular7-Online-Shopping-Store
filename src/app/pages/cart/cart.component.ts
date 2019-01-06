@@ -1,12 +1,12 @@
 import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
-import {CartService} from '../shared/services/cart.service';
+import {CartService} from '../../services/cart.service';
 import {Subject, Subscription} from 'rxjs';
-import {UserService} from '../shared/services/user.service';
-import {JwtResponse} from '../shared/response/JwtResponse';
-import {ProductInOrder} from '../shared/models/ProductInOrder';
+import {UserService} from '../../services/user.service';
+import {JwtResponse} from '../../response/JwtResponse';
+import {ProductInOrder} from '../../models/ProductInOrder';
 import {debounceTime, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Role} from "../shared/enum/Role";
+import {Role} from "../../enum/Role";
 
 @Component({
     selector: 'app-cart',

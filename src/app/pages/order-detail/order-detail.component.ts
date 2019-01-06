@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {OrderService} from "../../shared/services/order.service";
-import {Order} from "../../shared/models/Order";
+import {OrderService} from "../../services/order.service";
+import {Order} from "../../models/Order";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
