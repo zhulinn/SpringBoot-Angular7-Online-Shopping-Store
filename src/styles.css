@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~font-awesome/css/font-awesome.min.css";
 
 .ng-valid[required], .ng-valid.required  {
     border-left: 5px solid #42A948; /* green */

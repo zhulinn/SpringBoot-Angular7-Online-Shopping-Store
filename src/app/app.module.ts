@@ -16,7 +16,6 @@ import {CartComponent} from './pages/cart/cart.component';
 import {CookieService} from "ngx-cookie-service";
 import {ErrorInterceptor} from "./_interceptors/error-interceptor.service";
 import {JwtInterceptor} from "./_interceptors/jwt-interceptor.service";
-import {MsgComponent} from './msg/msg.component';
 import {OrderComponent} from './pages/order/order.component';
 import {OrderDetailComponent} from './pages/order-detail/order-detail.component';
 import {ProductListComponent} from './pages/product-list/product.list.component';
@@ -34,7 +33,6 @@ import {ProductEditComponent} from './pages/product-edit/product-edit.component'
         SignupComponent,
         DetailComponent,
         CartComponent,
-        MsgComponent,
         OrderComponent,
         OrderDetailComponent,
         ProductListComponent,
