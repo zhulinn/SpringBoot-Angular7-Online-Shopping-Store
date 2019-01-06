@@ -10,6 +10,7 @@
 /node_modules
 
 # IDEs and editors
+/web.iml
 /.idea
 .project
 .classpath
