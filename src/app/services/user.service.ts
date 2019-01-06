@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {apiUrl} from '../mockData';
+import {apiUrl} from '../../environments/environment';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {JwtResponse} from '../response/JwtResponse';

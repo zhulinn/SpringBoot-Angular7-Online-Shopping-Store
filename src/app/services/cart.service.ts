@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {apiUrl} from '../mockData';
+import {apiUrl} from '../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map, tap} from 'rxjs/operators';

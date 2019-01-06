@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {NavigationComponent} from './parts/navigation/navigation.component';
-import {FooterComponent} from './pages/footer/footer.component';
 import {CardComponent} from './pages/card/card.component';
 import {PaginationComponent} from './parts/pagination/pagination.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -26,7 +25,6 @@ import {ProductEditComponent} from './pages/product-edit/product-edit.component'
     declarations: [
         AppComponent,
         NavigationComponent,
-        FooterComponent,
         CardComponent,
         PaginationComponent,
         LoginComponent,

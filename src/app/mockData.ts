@@ -1,6 +1,5 @@
 import {ProductInfo} from './models/productInfo';
 
-export const apiUrl = '//localhost:8080/api';
 export const products: ProductInfo[] = [
   {
     productId: 'B0001',

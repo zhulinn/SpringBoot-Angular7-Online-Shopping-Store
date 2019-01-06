@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {ProductInfo} from '../models/productInfo';
-import {apiUrl} from '../mockData';
+import {apiUrl} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
