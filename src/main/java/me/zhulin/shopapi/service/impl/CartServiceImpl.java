@@ -46,7 +46,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public Cart mergeLocalCart(Collection<ProductInOrder> productInOrders, User user) {
+    public void mergeLocalCart(Collection<ProductInOrder> productInOrders, User user) {
         Cart finalCart = user.getCart();
         productInOrders.forEach(productInOrder -> {
             Set<ProductInOrder> set = finalCart.getProducts();
@@ -63,21 +63,20 @@ public class CartServiceImpl implements CartService {
             productInOrderRepository.save(prod);
         });
         cartRepository.save(finalCart);
-        return finalCart;
+
     }
 
     @Override
     @Transactional
-    public Cart delete(String itemId, User user) {
+    public void delete(String itemId, User user) {
         var op = user.getCart().getProducts().stream().filter(e -> itemId.equals(e.getProductId())).findFirst();
         op.ifPresent(productInOrder -> {
-            user.getCart().getProducts().remove(productInOrder);
-            userService.save(user);
+            productInOrder.setCart(null);
             productInOrderRepository.deleteById(productInOrder.getId());
-
         });
-        return user.getCart();
     }
+
+
 
     @Override
     @Transactional

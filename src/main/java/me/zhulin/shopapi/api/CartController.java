@@ -45,7 +45,7 @@ public class CartController {
         } catch (Exception e) {
             ResponseEntity.badRequest().body("Merge Cart Failed");
         }
-        return ResponseEntity.ok(user.getCart());
+        return ResponseEntity.ok(cartService.getCart(user));
     }
 
     @GetMapping("")
@@ -69,14 +69,15 @@ public class CartController {
     @PutMapping("/{itemId}")
     public ProductInOrder modifyItem(@PathVariable("itemId") String itemId, @RequestBody Integer quantity, Principal principal) {
         User user = userService.findOne(principal.getName());
-        return productInOrderService.update(itemId, quantity, user);
+         productInOrderService.update(itemId, quantity, user);
+        return productInOrderService.findOne(itemId, user);
     }
 
     @DeleteMapping("/{itemId}")
-    @Transactional
-    public Cart deleteItem(@PathVariable("itemId") String itemId, Principal principal) {
+    public void deleteItem(@PathVariable("itemId") String itemId, Principal principal) {
         User user = userService.findOne(principal.getName());
-        return cartService.delete(itemId, user);
+         cartService.delete(itemId, user);
+         // flush memory into DB
     }
 
 
