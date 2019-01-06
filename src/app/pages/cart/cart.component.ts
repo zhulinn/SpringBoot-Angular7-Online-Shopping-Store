@@ -5,8 +5,8 @@ import {UserService} from '../../services/user.service';
 import {JwtResponse} from '../../response/JwtResponse';
 import {ProductInOrder} from '../../models/ProductInOrder';
 import {debounceTime, switchMap} from 'rxjs/operators';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Role} from "../../enum/Role";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Role} from '../../enum/Role';
 
 @Component({
     selector: 'app-cart',
@@ -55,9 +55,9 @@ export class CartComponent implements OnInit, OnDestroy, AfterContentChecked {
             // switch to new search observable each time the term changes
             switchMap((productInOrder: ProductInOrder) => this.cartService.update(productInOrder))
         ).subscribe(prod => {
-                if (!prod) throw new Error();
+                if (prod) { throw new Error(); }
             },
-            _ => console.log("Update Item Failed"));
+            _ => console.log('Update Item Failed'));
     }
 
     ngOnDestroy() {
@@ -75,26 +75,26 @@ export class CartComponent implements OnInit, OnDestroy, AfterContentChecked {
     addOne(productInOrder) {
         productInOrder.count++;
         CartComponent.validateCount(productInOrder);
-        if (this.currentUser) this.updateTerms.next(productInOrder);
+        if (this.currentUser) { this.updateTerms.next(productInOrder); }
     }
 
     minusOne(productInOrder) {
         productInOrder.count--;
         CartComponent.validateCount(productInOrder);
-        if (this.currentUser) this.updateTerms.next(productInOrder);
+        if (this.currentUser) { this.updateTerms.next(productInOrder); }
     }
 
     onChange(productInOrder) {
         CartComponent.validateCount(productInOrder);
-        if (this.currentUser) this.updateTerms.next(productInOrder);
+        if (this.currentUser) { this.updateTerms.next(productInOrder); }
     }
 
 
-    remove(productInOrders, productInOrder) {
-        this.cartService.remove(productInOrders, productInOrder).subscribe(
-            prods => {
-                this.productInOrders = prods;
-                console.log("Remove" + prods);
+    remove(productInOrder: ProductInOrder) {
+        this.cartService.remove(productInOrder).subscribe(
+            success => {
+               this.productInOrders = this.productInOrders.filter(e => e.productId !== productInOrder.productId);
+                console.log('Cart: ' + this.productInOrders);
             },
             _ => console.log('Remove Cart Failed'));
     }
@@ -110,7 +110,7 @@ export class CartComponent implements OnInit, OnDestroy, AfterContentChecked {
                     this.productInOrders = [];
                 },
                 error1 => {
-                    console.log('Checkout Cart Failed')
+                    console.log('Checkout Cart Failed');
                 });
             this.router.navigate(['/']);
         }

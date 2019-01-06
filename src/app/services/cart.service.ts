@@ -104,15 +104,13 @@ export class CartService {
     }
 
 
-    remove(productInOrders, productInOrder): Observable<ProductInOrder[]> {
+    remove(productInOrder) {
         if (!this.currentUser) {
             delete this.localMap[productInOrder.productId];
-            return of(productInOrders.filter(e => e.productId !== productInOrder.productId));
+            return of(null);
         } else {
             const url = `${this.cartUrl}/${productInOrder.productId}`;
-            return this.http.delete<Cart>(url).pipe(
-                map(cart => cart.products),
-            );
+            return this.http.delete(url).pipe( );
         }
     }
 
