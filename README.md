@@ -1,8 +1,10 @@
 # Online Shop Application
 
 #### A full-stack Online Shop web application using Spring Boot 2 and Angular 7. 
-This is a Single Page Appliaction with client-side rendering. 
-It includes backend and frontend two seperate projects. The frontend client makes API calls to the backend server when it is running.
+This is a Single Page Appliaction with client-side rendering. It includes backend and frontend two seperate projects. 
+The frontend client makes API calls to the backend server when it is running.
+
+#### Live Demo: [Heroku](https://springboot-angular-shop.herokuapp.com/)
 
 > This project is based on my previous project [Online-Shopping-Store](https://github.com/zhulinn/Online-Shopping-Store), which uses FreeMarker as template engine for server-side rendering. 
 
@@ -50,4 +52,4 @@ Start the backend server before the frontend client.
   4. Run `ng serve`
   5. The frontend client is running on [localhost:4200]().
 
-Note: The backend API url is configured in `src/environments/environment.ts` in the frontend project. It is `localhost:8080/api` by default.
+Note: The backend API url is configured in `src/environments/environment.ts` of the frontend project. It is `localhost:8080/api` by default.
