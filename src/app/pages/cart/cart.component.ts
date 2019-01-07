@@ -55,7 +55,7 @@ export class CartComponent implements OnInit, OnDestroy, AfterContentChecked {
             // switch to new search observable each time the term changes
             switchMap((productInOrder: ProductInOrder) => this.cartService.update(productInOrder))
         ).subscribe(prod => {
-                if (prod) { throw new Error(); }
+   
             },
             _ => console.log('Update Item Failed'));
     }
