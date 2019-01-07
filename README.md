@@ -4,13 +4,23 @@
 This is a Single Page Appliaction with client-side rendering. It includes backend and frontend two seperate projects. 
 The frontend client makes API calls to the backend server when it is running.
 
-#### Live Demo: [Heroku](https://springboot-angular-shop.herokuapp.com/)
+#### Live Demo: [https://springboot-angular-shop.herokuapp.com/](https://springboot-angular-shop.herokuapp.com/)
 
 > This project is based on my previous project [Online-Shopping-Store](https://github.com/zhulinn/Online-Shopping-Store), which uses FreeMarker as template engine for server-side rendering. 
 
 ## Screenshot
 ![](https://raw.githubusercontent.com/zhulinn/blog/hexo/source/uploads/post_pics/spring-angular/cart.png)
 
+## Features
+- REST API
+- JWT authentication
+- Cookie based visitors' shopping cart
+- Persistent customers' shopping cart
+- Cart & order management
+- Checkout
+- Catalogue
+- Order management
+- Pagination
 ## Technology Stacks
 **Backend**
   - Java 11
