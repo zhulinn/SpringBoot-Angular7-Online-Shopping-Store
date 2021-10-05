@@ -1,17 +1,19 @@
 package me.zhulin.shopapi;
 
-import org.junit.Test;
+import me.zhulin.shopapi.service.impl.*;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.runners.Suite;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        CartServiceImplTest.class,
+        CategoryServiceImplTest.class,
+        OrderServiceImplTest.class,
+        ProductInOrderServiceImplTest.class,
+        ProductServiceImplTest.class,
+        UserServiceImplTest.class
+})
 public class ShopApiApplicationTests {
-
-    @Test
-    public void contextLoads() {
-    }
 
 }
 

@@ -5,6 +5,8 @@ import me.zhulin.shopapi.entity.Cart;
 import me.zhulin.shopapi.entity.OrderMain;
 import me.zhulin.shopapi.entity.ProductInOrder;
 import me.zhulin.shopapi.entity.User;
+import me.zhulin.shopapi.enums.ResultEnum;
+import me.zhulin.shopapi.exception.MyException;
 import me.zhulin.shopapi.repository.CartRepository;
 import me.zhulin.shopapi.repository.OrderRepository;
 import me.zhulin.shopapi.repository.ProductInOrderRepository;
@@ -69,14 +71,16 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void delete(String itemId, User user) {
+        if(itemId.equals("") || user == null) {
+            throw new MyException(ResultEnum.ORDER_STATUS_ERROR);
+        }
+
         var op = user.getCart().getProducts().stream().filter(e -> itemId.equals(e.getProductId())).findFirst();
         op.ifPresent(productInOrder -> {
             productInOrder.setCart(null);
             productInOrderRepository.deleteById(productInOrder.getId());
         });
     }
-
-
 
     @Override
     @Transactional
