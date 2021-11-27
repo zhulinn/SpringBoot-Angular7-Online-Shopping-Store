@@ -1,0 +1,73 @@
+.footer {
+  height: 300px;
+  position: relative;
+  font-family: 'circe';
+  background: #753175;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer div p, h4 {
+  color: #ffffff;
+}
+
+.submenuWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.buyers, .company, .partners {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.company, .socialWrapper, .partners {
+  margin-left: 50px;
+}
+
+.buyers h4, .company h4, .partners h4 {
+  margin-bottom: 10px;
+  margin-left: 40px;
+}
+
+.buyers li, .company li, .partners li {
+  margin-bottom: 5px;
+}
+
+.footerLink {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  color: #f7b1f7;
+}
+
+.socialWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.socialWrapper h4 {
+  text-align: center;
+}
+
+.socialIcons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+
+}
+
+.copyright {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
