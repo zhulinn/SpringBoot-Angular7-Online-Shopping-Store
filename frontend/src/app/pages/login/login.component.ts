@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Role} from "../../enum/Role";
+import {UserService} from '../../services/user.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Role} from '../../enum/Role';
 
 @Component({
     selector: 'app-login',
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        let params = this.route.snapshot.queryParamMap;
+        const params = this.route.snapshot.queryParamMap;
         this.isLogout = params.has('logout');
         this.returnUrl = params.get('returnUrl');
     }
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         this.userService.login(this.model).subscribe(
             user => {
                 if (user) {
-                    if (user.role != Role.Customer) {
+                    if (user.role !== Role.Customer) {
 
                         this.returnUrl = '/seller';
                     }

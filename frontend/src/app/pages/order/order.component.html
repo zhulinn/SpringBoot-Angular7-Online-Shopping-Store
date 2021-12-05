@@ -1,17 +1,17 @@
-<h1 align="center" class="display-4 mb-5">Orders</h1>
+<h1 align="center" class="display-4 mb-5">Заказы</h1>
 
 <table class="table table-striped text-center">
     <thead>
     <tr>
-        <th scope="col">Order #</th>
-        <th scope="col">Customer Name</th>
-        <th scope="col">Customer Email</th>
-        <th scope="col">Customer phone</th>
-        <th scope="col">Shipping Address</th>
-        <th scope="col">Total</th>
-        <th scope="col">Order Data</th>
-        <th scope="col">Status</th>
-        <th scope="col">Action</th>
+        <th scope="col">Номер заказа</th>
+        <th scope="col">Имя покупателя</th>
+        <th scope="col">Email покупателя</th>
+        <th scope="col">Телефон покупателя</th>
+        <th scope="col">Адрес доставки</th>
+        <th scope="col">Итого</th>
+        <th scope="col">Дата заказа</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Действия</th>
     </tr>
     </thead>
     <tbody>
@@ -31,8 +31,8 @@
             <a *ngIf="!(currentUser.role == Role.Customer && currentUser.name == order.buyerEmail)"
                style="display:
             block" href="" routerLink="/order/{{order.orderId}}">
-                Show</a>
-            <a *ngIf="order.orderStatus == 0" style="display: block" (click)="cancel(order)" routerLink="./">Cancel</a>
+                Показать</a>
+            <a *ngIf="order.orderStatus == 0" style="display: block" (click)="cancel(order)" routerLink="./">Отмена</a>
             <a *ngIf="currentUser.role != Role.Customer && order.orderStatus == 0"
                style="display: block"
                (click)="finish(order)"

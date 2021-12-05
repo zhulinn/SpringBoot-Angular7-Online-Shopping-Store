@@ -6,15 +6,15 @@
       <div class="card-body">
         <h4 class="card-title ">{{productInfo.productName}}</h4>
         <div class="text-left">
-          <p class="card-test"><strong>Description: </strong>{{productInfo.productDescription}}</p>
-          <p class="card-text"><strong>Price: </strong>{{productInfo.productPrice | currency}}</p>
-          <p class="card-text"><strong>Stock: </strong>{{productInfo.productStock}}</p>
+          <p class="card-test"><strong>Описание: </strong>{{productInfo.productDescription}}</p>
+          <p class="card-text"><strong>Цена: </strong>{{productInfo.productPrice | currency}}</p>
+          <p class="card-text"><strong>В наличии: </strong>{{productInfo.productStock}}</p>
         </div>
         <br>
         <a routerLink="/product/{{productInfo.productId}}" *ngIf="productInfo.productStatus == 0; else offBlock"
            class="btn btn-primary btn-lg"
-        >Get It!</a>
-        <ng-template #offBlock><a class="btn btn-secondary btn-lg disabled">Unavailable</a></ng-template>
+        >Купить</a>
+        <ng-template #offBlock><a class="btn btn-secondary btn-lg disabled">Товар недоступен</a></ng-template>
       </div>
     </div>
   </div>

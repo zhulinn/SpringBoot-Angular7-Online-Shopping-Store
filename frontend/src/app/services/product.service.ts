@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {ProductInfo} from '../models/productInfo';
-import {apiUrl} from '../../environments/environment';
+import {apiUrl} from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +21,7 @@ export class ProductService {
         return this.http.get(url)
             .pipe(
                 // tap(_ => console.log(_)),
-            )
+            );
     }
 
     getCategoryInPage(categoryType: number, page: number, size: number): Observable<any> {
@@ -35,7 +35,7 @@ export class ProductService {
         const url = `${this.productUrl}/${id}`;
         return this.http.get<ProductInfo>(url).pipe(
             catchError(_ => {
-                console.log("Get Detail Failed");
+                console.log('Get Detail Failed');
                 return of(new ProductInfo());
             })
         );

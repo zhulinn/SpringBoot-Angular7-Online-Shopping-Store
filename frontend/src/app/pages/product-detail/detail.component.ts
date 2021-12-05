@@ -27,7 +27,7 @@ export class DetailComponent implements OnInit {
 
   ngOnInit() {
     this.getProduct();
-    this.title = 'Product Detail';
+    this.title = 'Подробнее о товаре';
     this.count = 1;
   }
 

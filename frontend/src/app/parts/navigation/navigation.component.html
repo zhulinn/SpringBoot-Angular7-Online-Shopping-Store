@@ -1,62 +1,50 @@
 <nav class="header navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" [routerLink]="root">
-        <img src="/assets/logo.png" width="100" height="60" class="d-inline-block" alt="">
-    </a>
+  <a class="navbar-brand" [routerLink]="root">
+    <img src="/assets/logo.png" width="100" height="60" class="d-inline-block" alt="">
+  </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
 
-        <div class="navbar-nav" *ngIf="!currentUser || currentUser.role == Role.Customer">
-
-            <a class="nav-item nav-link "
-               routerLink="/category/0">
-                Ремешки
-            </a>
-            <a class="nav-item nav-link"
-               routerLink="/category/1">
-                Браслеты
-            </a>
-            <a class="nav-item nav-link "
-               routerLink="/category/2">
-                Чехлы
-            </a>
-            <a class="nav-item nav-link"
-               routerLink="/category/3">
-                Бронистекла
-            </a>
-
-        </div>
-
-        <div class="navbar-nav ml-auto">
-            <a *ngIf="!currentUser || currentUser.role == Role.Customer"
-                    class="nav-item nav-link " routerLink="/cart">
-                <i class="fas fa-shopping-cart"></i>
-                Корзина
-            </a>
-
-            <ng-container *ngIf="currentUser; else noUser">
-                <a class="nav-item nav-link " routerLink="/order">
-                    <i class="fas fa-list-ul"></i>
-                    Заказы
-                </a>
-                <a class="nav-item nav-link " routerLink="/profile">
-                    {{name}}
-                </a>
-                <a class="nav-item nav-link " (click)="logout()" routerLink="/login" [queryParams]="{logout: true}">
-                    Выйти
-                </a>
-            </ng-container>
-            <ng-template #noUser>
-                <a class="nav-item nav-link " routerLink="/login">
-                    Войти
-                </a>
-                <a class="nav-item nav-link " routerLink="/register">
-                    Регистрация
-                </a>
-            </ng-template>
-        </div>
+    <div class="navbar-nav" *ngIf="!currentUser || currentUser.role == Role.Customer">
+      <a class="nav-item nav-link" routerLink="/category/0">Ремешки</a>
+      <a class="nav-item nav-link" routerLink="/category/1">Браслеты</a>
+      <a class="nav-item nav-link" routerLink="/category/2">Чехлы</a>
+      <a class="nav-item nav-link" routerLink="/category/3">Бронистекла</a>
     </div>
+
+    <div class="navbar-nav ml-auto">
+      <a *ngIf="!currentUser || currentUser.role == Role.Customer"
+         class="nav-item nav-link " routerLink="/cart">
+        <i class="fas fa-shopping-cart"></i>
+        Корзина
+      </a>
+
+      <ng-container *ngIf="currentUser; else noUser">
+        <a class="nav-item nav-link " routerLink="/order">
+          <i class="fas fa-list-ul"></i>
+          Заказы
+        </a>
+        <a class="nav-item nav-link " routerLink="/profile">
+          {{name}}
+        </a>
+        <a class="nav-item nav-link " (click)="logout()" routerLink="/login" [queryParams]="{logout: true}">
+          Выйти
+        </a>
+      </ng-container>
+
+      <ng-template #noUser>
+        <a class="nav-item nav-link " routerLink="/login">
+          Войти
+        </a>
+        <a class="nav-item nav-link " routerLink="/register">
+          Регистрация
+        </a>
+      </ng-template>
+
+    </div>
+  </div>
 </nav>

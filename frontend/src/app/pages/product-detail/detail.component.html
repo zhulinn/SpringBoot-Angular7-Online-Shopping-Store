@@ -8,15 +8,15 @@
         <form name="form" #form='ngForm' (ngSubmit)="productInfo?.productStatus == 0 && addToCart()">
           <div class="text-left">
             <input hidden name="productId" [value]=productInfo?.productId>
-            <p class="card-test"><strong>Description: </strong>{{productInfo?.productDescription}}</p>
+            <p class="card-test"><strong>Описание: </strong>{{productInfo?.productDescription}}</p>
             <p class="card-text">
-              <strong>Price: </strong>
+              <strong>Цена: </strong>
               <label id="price">{{productInfo?.productPrice | currency}}</label>
             </p>
-            <p class="card-text"><strong>Stock: </strong>{{productInfo?.productStock}}</p>
+            <p class="card-text"><strong>В наличии: </strong>{{productInfo?.productStock}}</p>
 
             <label class="card-text">
-              <strong>Quantity: </strong>
+              <strong>Количество: </strong>
               <input [(ngModel)]=count
                      (change)="validateCount()"
                      type="number"
@@ -28,15 +28,15 @@
             </label>
 
 
-            <p class="card-text"><strong>Subtotal: </strong>
+            <p class="card-text"><strong>Итого: </strong>
               <label id="subtotal">{{count * productInfo?.productPrice | currency}}</label>
             </p>
           </div>
           <button type="submit" [disabled]="!form.form.valid" *ngIf="productInfo?.productStatus == 0; else offBlock"
                   class="btn btn-primary btn-lg"
-          >Add to Cart
+          >Добавить в корзину
           </button>
-          <ng-template #offBlock><a class="btn btn-secondary btn-lg disabled">Unavailable</a></ng-template>
+          <ng-template #offBlock><a class="btn btn-secondary btn-lg disabled">Товар недоступен</a></ng-template>
         </form>
 
       </div>
