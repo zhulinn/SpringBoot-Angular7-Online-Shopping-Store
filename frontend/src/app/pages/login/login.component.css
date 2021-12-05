@@ -1,0 +1,10 @@
+.violet-button {
+  background: #753175;
+  border: 1px solid #ffffff;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.violet-button:hover {
+  opacity: 0.85;
+}

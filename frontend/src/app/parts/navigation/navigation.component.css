@@ -1,0 +1,5 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(to right, #f566f5, #753175);
+}
