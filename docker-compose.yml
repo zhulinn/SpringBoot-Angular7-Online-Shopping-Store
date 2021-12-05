@@ -2,18 +2,20 @@ version: '2'
 services:
   db:
     image: postgres:9.4.5
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
   backend:
     build: backend/.
-    ports: 
+    ports:
       - "8080:8080"
     depends_on:
       - db
   frontend:
     build: frontend/.
-    ports: 
+    ports:
       - "80:80"
-    depends_on: 
+    depends_on:
       - backend
