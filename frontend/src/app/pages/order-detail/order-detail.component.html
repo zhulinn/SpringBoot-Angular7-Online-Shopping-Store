@@ -1,13 +1,13 @@
-<h1 align="center" class="display-4 mb-5">Order Detail</h1>
+<h1 align="center" class="display-4 mb-5">Подробнее о заказе</h1>
 <table class="table table-striped text-center">
     <thead>
     <tr>
-        <th scope="col">Photo</th>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Price</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Subtotal</th>
+        <th scope="col">Фото</th>
+        <th scope="col">Название</th>
+        <th scope="col">Описание</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Итого</th>
 
     </tr>
     </thead>
@@ -25,4 +25,4 @@
     </tr>
     </tbody>
 </table>
-<h5 style="display: inline" class="float-right">Total: {{(order$ | async)?.orderAmount | currency}}</h5>
+<h5 style="display: inline" >Итого: {{(order$ | async)?.orderAmount | currency}}</h5>

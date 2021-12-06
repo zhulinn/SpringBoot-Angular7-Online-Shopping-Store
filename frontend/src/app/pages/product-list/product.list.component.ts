@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserService} from "../../services/user.service";
-import {ProductService} from "../../services/product.service";
-import {JwtResponse} from "../../response/JwtResponse";
-import {Subscription} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
-import {CategoryType} from "../../enum/CategoryType";
-import {ProductStatus} from "../../enum/ProductStatus";
-import {ProductInfo} from "../../models/productInfo";
-import {Role} from "../../enum/Role";
+import {UserService} from '../../services/user.service';
+import {ProductService} from '../../services/product.service';
+import {JwtResponse} from '../../response/JwtResponse';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+import {CategoryType} from '../../enum/CategoryType';
+import {ProductStatus} from '../../enum/ProductStatus';
+import {ProductInfo} from '../../models/productInfo';
+import {Role} from '../../enum/Role';
 
 @Component({
     selector: 'app-product.list',
@@ -58,7 +58,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
 
     remove(productInfos: ProductInfo[], productInfo) {
-        this.productService.delelte(productInfo).subscribe(_ => {
+        this.productService.delete(productInfo).subscribe(_ => {
                 productInfos = productInfos.filter(e => e.productId != productInfo);
             },
             err => {

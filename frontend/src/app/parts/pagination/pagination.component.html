@@ -5,7 +5,7 @@
         class="page-link"
         [routerLink]="['./']"
         [queryParams]="{ page: currentPage?.number, size: currentPage?.size }"
-      >Previous</a
+      >Назад</a
       >
     </li>
     <ng-template #prev>
@@ -38,7 +38,7 @@
           page: currentPage?.number + 2,
           size: currentPage?.size
         }"
-      >Next</a
+      >Вперед</a
       >
     </li>
     <ng-template #next>

@@ -52,7 +52,7 @@ export class ProductService {
     }
 
 
-    delelte(productInfo: ProductInfo): Observable<any> {
+    delete(productInfo: ProductInfo): Observable<any> {
         const url = `${apiUrl}/seller/product/${productInfo.productId}/delete`;
         return this.http.delete(url);
     }
