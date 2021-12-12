@@ -20,6 +20,13 @@ export class NavigationComponent implements OnInit, OnDestroy {
     root = '/';
     Role = Role;
 
+    categories = [
+      {name: 'null', type: 0},
+      {name: 'first', type: 1},
+      {name: 'second', type: 2},
+      {name: 'third', type: 3},
+    ];
+
     constructor(private userService: UserService,
                 private router: Router,
     ) {
