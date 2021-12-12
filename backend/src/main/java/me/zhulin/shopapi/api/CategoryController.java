@@ -43,4 +43,10 @@ public class CategoryController {
         tmp.setCategory(cat.getCategoryName());
         return tmp;
     }
+
+    @GetMapping("/category/{all}")
+    public AllCategoryPage showAll(@PathVariable("all") String categoryAll) {
+                АllCategory all = categoryService.findAll();
+                return all;
+    }
 }

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 // import {prod, products} from '../shared/mockData';
 import {ProductService} from '../../services/product.service';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-card',
@@ -57,6 +57,7 @@ export class CardComponent implements OnInit, OnDestroy {
         });
     } else { //  /category/:id
       const type = this.route.snapshot.url[1].path;
+      console.log('type', type);
       this.productService.getCategoryInPage(+type, page, size)
         .subscribe(categoryPage => {
           this.title = categoryPage.category;
