@@ -16,11 +16,9 @@ export class ProductService {
     constructor(private http: HttpClient) {
     }
 
-    getAllCategories() {
+    getAllCategories(): Observable<any> {
       const url = `${this.categoryUrl}/all`;
-      return this.http.get(url).pipe(
-        tap(data => console.log('getAllCategories', data))
-      );
+      return this.http.get(url);
     }
 
     getAllInPage(page: number, size: number): Observable<any> {

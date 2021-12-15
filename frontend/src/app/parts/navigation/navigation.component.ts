@@ -1,9 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {JwtResponse} from '../../response/JwtResponse';
 import {Router} from '@angular/router';
 import {Role} from '../../enum/Role';
+import {ProductService} from 'src/app/services/product.service';
+import {Categories} from 'src/app/models';
 
 @Component({
     selector: 'app-navigation',
@@ -15,22 +17,17 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
     currentUserSubscription: Subscription;
     name$;
+    categories$: Observable<Categories>;
     name: string;
     currentUser: JwtResponse;
     root = '/';
     Role = Role;
 
-    categories = [
-      {name: 'null', type: 0},
-      {name: 'first', type: 1},
-      {name: 'second', type: 2},
-      {name: 'third', type: 3},
-    ];
-
     constructor(private userService: UserService,
+                private productService: ProductService,
                 private router: Router,
     ) {
-
+      this.categories$ = this.getNavigation();
     }
 
 
@@ -56,4 +53,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
         // this.router.navigate(['/login'], {queryParams: {logout: 'true'}} );
     }
 
+    getNavigation(): Observable<Categories> {
+      return this.productService.getAllCategories();
+    }
 }
