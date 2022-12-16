@@ -5,7 +5,8 @@ This is a Single Page Appliaction with client-side rendering. It includes [backe
 The frontend client makes API calls to the backend server when it is running.
 > This project is based on my previous project [Online-Shopping-Store](https://github.com/zhulinn/Online-Shopping-Store), which uses FreeMarker as template engine for server-side rendering. 
 > 
-#### Live Demo: [https://springboot-angular-shop.herokuapp.com/](https://springboot-angular-shop.herokuapp.com/)
+#### Live Demo: [https://springboot-angular-shop.herokuapp.com/](https://springboot-angular-shop.herokuapp.com/) Heroku has removed free tier on Postgres, the demo is no longer working...:(
+
 For Heroku application repo cloning, please check [Angular7-SpringBoot-hybrid-project](https://github.com/zhulinn/Angular7-SpringBoot-hybrid-project).
 
 ## Screenshot
