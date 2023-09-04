@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ShopApiApplication<shop-api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "me.zhulin.shopapi.ShopApiApplication",
+            "projectName": "shop-api",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
